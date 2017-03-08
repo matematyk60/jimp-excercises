@@ -4,9 +4,9 @@
 
 #ifndef JIMP_EXERCISES_PALINDROME_H
 #define JIMP_EXERCISES_PALINDROME_H
-#include <iostream>;
+#include <string>;
 
-bool is_palindrome(std::string str);
+bool IsPalindrome(std::string str);
 
 
 
