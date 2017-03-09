@@ -1,14 +1,14 @@
 //
 // Created by matematyk60 on 06.03.17.
 //
-#include <string>
 
 #ifndef JIMP_EXERCISES_REVERSESTRING_H
 #define JIMP_EXERCISES_REVERSESTRING_H
+#include <string>
 
 
 std::string reverse(std::string str);
 
-void reversing(const char *from, char *where, int *i);
+void RecursiveReverse(const char *from, char *dest, int *i);
 
 #endif //JIMP_EXERCISES_REVERSESTRING_H
