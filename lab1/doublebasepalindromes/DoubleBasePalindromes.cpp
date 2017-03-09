@@ -3,42 +3,35 @@
 //
 
 #include "DoubleBasePalindromes.h"
+#include <ReverseString.h>
+#include <Palindrome.h>
 
 using namespace std;
 
-string DecimalToBinary(int DecimalValue){
-    string Binary;
-    while(DecimalValue != 0){
-        Binary+=to_string(DecimalValue%2);
-        DecimalValue =  DecimalValue / 2;
+string ToBinary(int value){
+    string binary;
+    while(value != 0){
+        binary+=to_string(value%2);
+        value = value / 2;
     }
-    return Binary;
+    binary = reverse(binary);
+    return binary;
 }
-
-bool is_palindrome(std::string str){
-    const char *characters = str.c_str();
-    size_t size = str.size();
-
-    for( int i = 0 ; i <= (size/2) ; i++ ){
-        if(characters[i] != characters[size - i - 1]) {return false;}
-    }
-    return true;
-}
-
-
-
 
 uint64_t DoubleBasePalindromes(int max_vaule_exculsive){
-    string StringDecimal, Binary;
+    string stringDecimal, binary;
     uint64_t sum = 0;
 
     for( int i = 0 ; i < max_vaule_exculsive ; i++) {
-        StringDecimal = to_string(i);
-        if (is_palindrome(StringDecimal)) {
-            Binary = DecimalToBinary(i);
-            if (is_palindrome(Binary)) { sum += i; }
+        stringDecimal = to_string(i);
+        if (IsPalindrome(stringDecimal)) {
+            binary = ToBinary(i);
+            if (IsPalindrome(binary)) {
+                sum += i;
+            }
         }
     }
+
     return sum;
 
     }
