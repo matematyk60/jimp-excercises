@@ -1,14 +1,12 @@
 //
-// Created by janek on 12.03.17.
+// Created by jan on 07.03.17.
 //
 
-#ifndef JIMP_EXERCISES_DOUBLEBASEPALINDROME_H
-#define JIMP_EXERCISES_DOUBLEBASEPALINDROME_H
+#ifndef JIMP_EXERCISES_DOUBLEBASEPALINDROMES_H
+#define JIMP_EXERCISES_DOUBLEBASEPALINDROMES_H
 
+#include <cstdint>
 
-class DoubleBasePalindrome {
+uint64_t DoubleBasePalindromes(int max_vaule_exculsive);
 
-};
-
-
-#endif //JIMP_EXERCISES_DOUBLEBASEPALINDROME_H
+#endif //JIMP_EXERCISES_DOUBLEBASEPALINDROMES_H
