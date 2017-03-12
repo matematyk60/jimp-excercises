@@ -1,0 +1,14 @@
+//
+// Created by janek on 12.03.17.
+//
+
+#ifndef JIMP_EXERCISES_DOUBLEBASEPALINDROME_H
+#define JIMP_EXERCISES_DOUBLEBASEPALINDROME_H
+
+
+class DoubleBasePalindrome {
+
+};
+
+
+#endif //JIMP_EXERCISES_DOUBLEBASEPALINDROME_H
