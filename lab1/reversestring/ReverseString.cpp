@@ -5,7 +5,6 @@
 #include "ReverseString.h"
 using namespace std;
 
-
 string reverse(string str){
     const char *characters = str.c_str();
     size_t size = str.size();
