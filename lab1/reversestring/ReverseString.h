@@ -1,14 +1,14 @@
 //
-// Created by janek on 12.03.17.
+// Created by jan on 06.03.17.
 //
 
 #ifndef JIMP_EXERCISES_REVERSESTRING_H
 #define JIMP_EXERCISES_REVERSESTRING_H
 
+#include <iostream>
+#include <string>
 
-class ReverseString {
-
-};
+std::string reverse(std::string str);
 
 
 #endif //JIMP_EXERCISES_REVERSESTRING_H
