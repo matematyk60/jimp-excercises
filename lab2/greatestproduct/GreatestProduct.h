@@ -7,7 +7,9 @@
 #include <iostream>
 #include <vector>
 
-int GreatestProduct(const std::vector<int> &numbers, int k);
+using namespace std;
 
+int GreatestProduct(const std::vector<int> &numbers, int k);
+void TryToInsert(vector<int> &greatest, int value, int k);
 
 #endif //JIMP_EXERCISES_GREATESTPRODUCT_H
