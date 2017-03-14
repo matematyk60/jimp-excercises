@@ -18,7 +18,7 @@ string XorCypherBreaker(const std::vector<char> &cryptogram,
 
 
     char arr[3];
-    string str="", str1="", str2="";
+    string str="", str1="";
     int counter1 = 0, counter2 = 0;
     int ite;
     for(int i=97; i<=122; i++){
@@ -55,7 +55,6 @@ string XorCypherBreaker(const std::vector<char> &cryptogram,
                 if(counter2 > counter1) {
                     str = arr;
                     counter1 = counter2;
-                    str2 = str1;
 
                 }
             }
