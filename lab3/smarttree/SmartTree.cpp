@@ -21,18 +21,22 @@ namespace datastructures{
 
     std::unique_ptr <struct SmartTree> InsertLeftChild(std::unique_ptr<struct SmartTree> tree,
                                                        std::unique_ptr<struct SmartTree> left_subtree){
-        tree->left = move(left_subtree);
-        tree->left->left = nullptr;
-        tree->left->right = nullptr;
+        if(tree!= nullptr) {
+            tree->left = move(left_subtree);
+            tree->left->left = nullptr;
+            tree->left->right = nullptr;
+        }
         return tree;
 
     }
 
     std::unique_ptr <struct SmartTree> InsertRightChild(std::unique_ptr<struct SmartTree> tree,
                                                         std::unique_ptr<struct SmartTree> right_subtree){
-        tree->right = move(right_subtree);
-        tree->right->left = nullptr;
-        tree->right->right = nullptr;
+        if(tree!= nullptr) {
+            tree->right = move(right_subtree);
+            tree->right->left = nullptr;
+            tree->right->right = nullptr;
+        }
         return tree;
     }
 
