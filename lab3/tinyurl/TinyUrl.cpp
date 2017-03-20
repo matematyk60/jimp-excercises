@@ -7,7 +7,7 @@
 #include <string>
 #include <array>
 #include <memory>
-#include <iostream>
+
 
 namespace tinyurl{
 
@@ -44,12 +44,13 @@ namespace tinyurl{
         string coded_url="";
         auto &c = *codec;
         c->url[c->counter] = url;
-        ++c->counter;
         NextHash(&c->state);
+        ++(c->counter);
         for(int i=0; i<6; ++i)
             coded_url[i] = c->state[i];
         return coded_url;
     }
+
 
     int convert(int n){
         if(n < 48) return 0;
@@ -82,7 +83,6 @@ namespace tinyurl{
 
 
         decoded_url = c.url[number];
-        std::cout << decoded_url;
 
         return decoded_url;
     }

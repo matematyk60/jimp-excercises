@@ -8,16 +8,17 @@
 #include <array>
 #include <memory>
 #include <iostream>
-using namespace std;
+using namespace tinyurl;
+using std::cout;
+using std::endl;
 
-namespace tinyurl {
-    int main() {
-        auto codec = Init();
-        auto voronoi_shortened = Encode("https://en.wikipedia.org/wiki/Voronoi_diagram", &codec);
-        auto movie_shortened = Encode("https://www.youtube.com/watch?v=cWDdd5KKhts", &codec);
-        cout<<Decode(codec, voronoi_shortened)<<endl;
-        cout<<Decode(codec, movie_shortened)<<endl;
+int main() {
+    auto codec = Init();
+    auto voronoi_shortened = Encode("https://en.wikipedia.org/wiki/Voronoi_diagram", &codec);
+    auto movie_shortened = Encode("https://www.youtube.com/watch?v=cWDdd5KKhts", &codec);
+    cout << Decode(codec, voronoi_shortened) << endl;
+    cout << Decode(codec, movie_shortened) << endl;
 
-        return 0;
-    }
+    return 0;
 }
+
