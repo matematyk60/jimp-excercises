@@ -7,11 +7,7 @@
 #include <ostream>
 #include <string>
 #include <unordered_map>
-#include <iostream>
 
-using ::std::cout;
-using ::std::ostream;
-using ::std::endl;
 
 
 namespace nets {
