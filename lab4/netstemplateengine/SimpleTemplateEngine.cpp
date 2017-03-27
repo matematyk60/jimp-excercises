@@ -25,34 +25,34 @@ namespace nets {
         std::string changed = str;
         std::string tmp = "";
         unsigned long k;
-        bool tf=true;
+        bool tf = true;
 
         for (unsigned long i = 0; i < changed.length(); i++) {
-            if (changed[i] == '{' && changed[i + 1] == '{' && changed[i+2] != '{') {
+            if (changed[i] == '{' && changed[i + 1] == '{' && changed[i + 2] != '{') {
                 k = i;
                 i += 2;
 
                 for (i; changed[i] != '}'; i++) {
                     tmp += changed[i];
-                    if(changed[i+1] == '}' && changed[i+2] != '}') {
+                    if (changed[i + 1] == '}' && changed[i + 2] != '}') {
                         tmp = "";
                         i = k;
-                        tf=false;
+                        tf = false;
                         break;
                     }
                 }
 
-                if(tf){
+                if (tf) {
                     changed.erase(k, (i - k + 2));
                     i = 0;
                 }
-                tf=true;
+                tf = true;
 
                 for (const auto &n : model) {
                     if (tmp == n.first) {
                         tmp = "";
                         changed.insert(k, n.second);
-                        i = k+4;
+                        i = k + 4;
                     }
                 }
                 tmp = "";
