@@ -52,7 +52,7 @@ namespace nets {
                     if (tmp == n.first) {
                         tmp = "";
                         changed.insert(k, n.second);
-                        i = k + 4;
+                        i = k;
                     }
                 }
                 tmp = "";
