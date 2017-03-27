@@ -1,30 +1,28 @@
 //
-// Created by janek on 26.03.17.
+// Created by matematyk60 on 26.03.17.
 //
-
 
 #ifndef JIMP_EXERCISES_SIMPLETEMPLATEENGINE_H
 #define JIMP_EXERCISES_SIMPLETEMPLATEENGINE_H
-#include <ostream>
-#include <string>
-#include <unordered_map>
 
+#include <unordered_map>
+#include <string>
 
 namespace nets{
 
-    class View{
+    class View {
+
     public:
-
-        View(std::string ToChange);
-
+        View(std::string);
+        View();
         ~View();
-
         std::string Render(const std::unordered_map <std::string, std::string> &model) const;
 
-
     private:
-        std::string str;
+        std::string text_;
 
     };
 }
+
+
 #endif //JIMP_EXERCISES_SIMPLETEMPLATEENGINE_H

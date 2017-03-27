@@ -1,3 +1,3 @@
 //
-// Created by janek on 26.03.17.
+// Created by matematyk60 on 26.03.17.
 //
