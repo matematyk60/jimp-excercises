@@ -1,5 +1,5 @@
 //
-// Created by matematyk60 on 27.03.17.
+// Created by jan on 27.03.17.
 //
 
 #ifndef JIMP_EXERCISES_SIMPLEJSON_H

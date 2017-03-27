@@ -1,5 +1,5 @@
 //
-// Created by matematyk60 on 26.03.17.
+// Created by jan on 26.03.17.
 //
 
 #ifndef JIMP_EXERCISES_SIMPLETEMPLATEENGINE_H
