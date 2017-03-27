@@ -7,44 +7,61 @@
 #include <ostream>
 #include <string>
 #include <unordered_map>
+#include <iostream>
+
+using ::std::cout;
+using ::std::ostream;
+using ::std::endl;
 
 
 namespace nets {
-    
-    View::View() {}
-    
-    std::string View::Render(const std::unordered_map<std::string, std::string> &model) {
+
+    View::View(std::string ToChange) {
+        str = ToChange;
+    }
+
+
+    View::~View() {
+
+    }
+
+    std::string View::Render(const std::unordered_map<std::string, std::string> &model) const {
+        std::string changed = str;
         std::string tmp = "";
         unsigned long k;
-        bool first = true;
-        for (const auto &n : model) {
-            if (first) {
-                str = n.first;
-                first = false;
-            } else
-                break;
-        }
-        first = true;
-        for (unsigned long i = 0; i < str.length(); i++) {
-            if (str[i] == '{' && str[i + 1]) {
-                i += 2;
+        bool tf=true;
+
+        for (unsigned long i = 0; i < changed.length(); i++) {
+            if (changed[i] == '{' && changed[i + 1] == '{' && changed[i+2] != '{') {
                 k = i;
-                for (i; str[i] != '}'; i++) {
-                    for (int j = 0; j < i; j++) {
-                        tmp[j] = str[i];
+                i += 2;
+
+                for (i; changed[i] != '}'; i++) {
+                    tmp += changed[i];
+                    if(changed[i+1] == '}' && changed[i+2] != '}') {
+                        tmp = "";
+                        i = k;
+                        tf=false;
+                        break;
                     }
                 }
-                str.erase(k, (i - k));
+
+                if(tf){
+                    changed.erase(k, (i - k + 2));
+                    i = 0;
+                }
+                tf=true;
+
                 for (const auto &n : model) {
-                    if (first) {
-                        first = false;
-                        continue;
-                    } else if (tmp == n.first) {
-                        str.insert(k, n.second);
+                    if (tmp == n.first) {
+                        tmp = "";
+                        changed.insert(k, n.second);
+                        i = k+4;
                     }
                 }
+                tmp = "";
             }
         }
-        return str;
+        return changed;
     }
 }

@@ -15,9 +15,11 @@ namespace nets{
     class View{
     public:
 
-        View();
+        View(std::string ToChange);
 
-        std::string Render(const std::unordered_map <std::string, std::string> &model);
+        ~View();
+
+        std::string Render(const std::unordered_map <std::string, std::string> &model) const;
 
 
     private:
