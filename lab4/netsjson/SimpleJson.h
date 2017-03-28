@@ -20,7 +20,7 @@ namespace nets{
         JsonValue(double);
         JsonValue(std::map <std::string, JsonValue>);
         JsonValue(std::vector<JsonValue>);
-        //~JsonValue();
+        ~JsonValue();
         std::experimental::optional<JsonValue> ValueByName(const std::string &name) const;
         std::string ToString() const;
     private:
