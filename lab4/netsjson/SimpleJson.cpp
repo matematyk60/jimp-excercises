@@ -10,10 +10,10 @@ namespace nets{
     std::experimental::optional<JsonValue> JsonValue::ValueByName(const std::string &name) const {
         for(auto n : *map_){
             if(!n.first.compare(name)){
-                return n.second;
+                return std::experimental::make_optional(n.second);
             }
         }
-        return 0;
+        return {};
     }
 
     std::string JsonValue::ToString() const {
