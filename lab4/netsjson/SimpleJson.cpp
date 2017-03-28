@@ -13,7 +13,7 @@ namespace nets {
                 std::experimental::make_optional(n.second);
             }
         }
-        //return 0;
+        return {};
     }
 
     std::string JsonValue::ToString() const {
