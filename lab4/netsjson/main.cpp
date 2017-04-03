@@ -1,12 +1,10 @@
 //
-// Created by jan on 27.03.17.
+// Created by matematyk60 on 27.03.17.
 //
-#include <string>
-#include <iostream>
-#include <vector>
-#include <map>
 #include "SimpleJson.h"
+#include <iostream>
 
+using std::cout;
 using ::std::vector;
 using ::std::map;
 using ::std::cout;
@@ -15,8 +13,12 @@ using ::std::string;
 using ::nets::JsonValue;
 using ::std::literals::operator""s;
 
-int main() {
 
+using namespace nets;
+
+int main(){
+    JsonValue str(R"(\\\\\\\"http:\\\\\\\"klmno)");
+    cout << str.ToString();
     vector<JsonValue> js {JsonValue{56.6},JsonValue{45},JsonValue{"abc"s}};
     map<string, JsonValue> obj_v {{"values",JsonValue{js}},{"name",JsonValue{"Test name"}},{"age",JsonValue{13}}};
     JsonValue obj {obj_v};
@@ -27,9 +29,12 @@ int main() {
     cout << "values: " << obj.ValueByName("values")->ToString() << endl;
     cout << "age: " << obj.ValueByName("age")->ToString() << endl;
     //obiekty optional można traktować jak wartości boolean (true wartość obecna, false optional jest pusty)
-    if (obj.ValueByName("xyz")) {
+    if (obj.ValueByName("name")) {
         cout << "is present" << endl;
     } else {
         cout << "is absent" << endl;
     }
+
 }
+
+

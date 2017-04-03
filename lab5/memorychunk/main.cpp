@@ -1,4 +1,4 @@
 //
-// Created by janek on 28.03.17.
+// Created by matematyk60 on 28.03.17.
 //
 
