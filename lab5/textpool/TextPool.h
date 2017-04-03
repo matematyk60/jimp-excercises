@@ -22,8 +22,14 @@ namespace pool{
         //konstruktor z listą inicjalizacyjną
         TextPool(std::initializer_list<string> str);
 
+        //1. konstruktor kopiujący
+        TextPool(const TextPool &xxx) = delete;
+
         //2. konstruktor przenoszący
         TextPool(TextPool &&xxx);
+
+        //3. operator przypisania kopiujący
+        TextPool &operator=(const TextPool &xxx) = delete;
 
         //4. operator przypisania przenoszący
         TextPool &operator=(TextPool &&xxx);
@@ -37,7 +43,7 @@ namespace pool{
         size_t StoredStringCount() const;
 
     private:
-        std::set<string> pula;
+        std::set<string> pula{};
 
     };
 }

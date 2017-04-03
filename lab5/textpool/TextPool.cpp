@@ -8,38 +8,39 @@
 namespace pool{
 
     TextPool::TextPool() {
-
     }
 
     TextPool::TextPool(std::initializer_list<string> str) {
-        for(auto n : str){
-            if (pula.find(17) != pula.end()) {
-                cout<<"17 jest elementem zbioru"<<endl;
-            } else {
-                cout<<"17 nie jest w zbiorze";
-            }
-        }
+        std::initializer_list<string>::iterator it;
+        if (pula.size() == 0)
+            for (it = str.begin(); it != str.end(); ++it)
+                pula.insert(pula.end(), *it);
+        else
+            for (it = str.begin(); it != str.end(); ++it)
+                Intern(*it);
     }
 
     TextPool::TextPool(TextPool &&xxx) {
-
     }
 
     TextPool &TextPool::operator=(TextPool &&xxx) {
-        return <#initializer#>;
+        return xxx;
     }
 
     TextPool::~TextPool() {
-
     }
 
     std::experimental::string_view TextPool::Intern(const string &str) {
-
-
-        return std::experimental::string_view();
+        if (pula.find(str) != pula.end())
+            return std::experimental::string_view();
+        else {
+            pula.emplace(pula.end(), str);
+            return std::experimental::string_view();
+        }
     }
 
     size_t TextPool::StoredStringCount() const {
-        return 0;
+        size_t siz = pula.size();
+        return siz;
     }
 }
