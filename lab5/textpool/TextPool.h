@@ -15,7 +15,7 @@ namespace pool{
     class TextPool {
     public:
         TextPool();
-        TextPool(const std::initializer_list<const char*> &elements);
+        TextPool(const std::initializer_list<const char *> &elements);
         TextPool(TextPool &Pool) = delete;
         TextPool& operator=(TextPool &Pool) = delete;
         TextPool& operator=(TextPool &&Pool);

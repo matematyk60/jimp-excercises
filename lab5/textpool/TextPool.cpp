@@ -5,15 +5,16 @@
 #include "TextPool.h"
 
 namespace pool{
+
     std::experimental::string_view TextPool::Intern(const std::string &str) {
         for(auto n : List_){
-            if (n.compare(str)){
-                return std::experimental::string_view(n);
+            if (!n.compare(str)){
+                return n;
             }
         }
         //else
         List_.emplace_back(str);
-        return std::experimental::string_view(List_[List_.size()-1]);
+        return List_[List_.size()-1];
     }
 
     size_t TextPool::StoredStringCount() const {
@@ -24,10 +25,19 @@ namespace pool{
         List_.clear();
     }
 
-    TextPool::TextPool(const std::initializer_list<const char *> &elements) {
+    TextPool::TextPool(const std::initializer_list<const char*> &elements) {
         List_.clear();
-        for(auto n : elements){
-            List_.emplace_back(n);
+        bool is_already_here = false;
+        for (auto n : elements) {
+            for (auto m : List_)
+                if (!m.compare(n)) {
+                    is_already_here = true;
+                    break;
+                }
+            if (!is_already_here) {
+                List_.emplace_back(n);
+            }
+            is_already_here = false;
         }
     }
 
@@ -38,6 +48,7 @@ namespace pool{
 
         List_.clear();
         std::swap(List_, Pool.List_);
+        return Pool;
     }
 
     TextPool::TextPool(TextPool &&Pool) {
@@ -46,7 +57,6 @@ namespace pool{
     }
 
     TextPool::~TextPool() {
-        List_.clear(); 
     }
 }
 
