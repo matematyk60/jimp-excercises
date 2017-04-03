@@ -4,43 +4,57 @@
 
 #include "TextPool.h"
 
-
 namespace pool{
-
-    TextPool::TextPool() {
-    }
-
-    TextPool::TextPool(std::initializer_list<string> str) {
-        std::initializer_list<string>::iterator it;
-        if (pula.size() == 0)
-            for (it = str.begin(); it != str.end(); ++it)
-                pula.insert(pula.end(), *it);
-        else
-            for (it = str.begin(); it != str.end(); ++it)
-                Intern(*it);
-    }
-
-    TextPool::TextPool(TextPool &&xxx) {
-    }
-
-    TextPool &TextPool::operator=(TextPool &&xxx) {
-        return xxx;
-    }
-
-    TextPool::~TextPool() {
-    }
-
-    std::experimental::string_view TextPool::Intern(const string &str) {
-        if (pula.find(str) != pula.end())
-            return std::experimental::string_view();
-        else {
-            pula.emplace(pula.end(), str);
-            return std::experimental::string_view();
+    std::experimental::string_view TextPool::Intern(const std::string &str) {
+        for(auto n : List_){
+            if (!n.compare(str)){
+                return std::experimental::string_view(n);
+            }
         }
+        //else
+        List_.emplace_back(str);
+        return std::experimental::string_view(List_[List_.size()-1]);
     }
 
     size_t TextPool::StoredStringCount() const {
-        size_t siz = pula.size();
-        return siz;
+        return List_.size();
+    }
+
+    TextPool::TextPool() {
+        List_.clear();
+    }
+
+    TextPool::TextPool(const std::initializer_list<const char*> &elements) {
+        List_.clear();
+        bool issomewhere = false;
+        for (auto n : elements) {
+            for (auto m : List_)
+                if (!m.compare(n)) {
+                    issomewhere = true;
+                    break;
+                }
+            if (!issomewhere) {
+                List_.emplace_back(n);
+            }
+            issomewhere = false;
+        }
+    }
+
+    TextPool &TextPool::operator=(TextPool &&Pool) {
+        if(this == &Pool){
+            return Pool;
+        }
+
+        List_.clear();
+        std::swap(List_, Pool.List_);
+    }
+
+    TextPool::TextPool(TextPool &&Pool) {
+        List_.clear();
+        std::swap(List_, Pool.List_);
+    }
+
+    TextPool::~TextPool() {
+        List_.clear();
     }
 }

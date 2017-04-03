@@ -9,45 +9,36 @@
 #include <string>
 #include <experimental/string_view>
 #include <set>
+#include <vector>
 
 namespace pool{
-    using ::std::string;
-
-    class TextPool{
+    class TextPool {
     public:
 
-        //domyślny konstruktor
         TextPool();
 
-        //konstruktor z listą inicjalizacyjną
-        TextPool(std::initializer_list<string> str);
+        TextPool(const std::initializer_list<const char*> &elements);
 
-        //1. konstruktor kopiujący
-        TextPool(const TextPool &xxx) = delete;
+        TextPool(const TextPool &Pool) = delete;
 
-        //2. konstruktor przenoszący
-        TextPool(TextPool &&xxx);
+        TextPool &operator=(TextPool &Pool) = delete;
 
-        //3. operator przypisania kopiujący
-        TextPool &operator=(const TextPool &xxx) = delete;
+        TextPool &operator=(TextPool &&Pool);
 
-        //4. operator przypisania przenoszący
-        TextPool &operator=(TextPool &&xxx);
+        TextPool(TextPool &&Pool);
 
-        //5. Destruktor
         ~TextPool();
 
-
-        std::experimental::string_view Intern(const string &str);
+        std::experimental::string_view Intern(const std::string &str);
 
         size_t StoredStringCount() const;
 
-    private:
-        std::set<string> pula{};
 
+    private:
+        std::vector<std::experimental::string_view> List_;
     };
 }
 
 
-#endif //JIMP_EXERCISES_TEXTPOOL_H
 
+#endif //JIMP_EXERCISES_TEXTPOOL_H
