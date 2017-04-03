@@ -12,7 +12,13 @@ namespace pool{
     }
 
     TextPool::TextPool(std::initializer_list<string> str) {
-
+        for(auto n : str){
+            if (pula.find(17) != pula.end()) {
+                cout<<"17 jest elementem zbioru"<<endl;
+            } else {
+                cout<<"17 nie jest w zbiorze";
+            }
+        }
     }
 
     TextPool::TextPool(TextPool &&xxx) {
@@ -28,6 +34,8 @@ namespace pool{
     }
 
     std::experimental::string_view TextPool::Intern(const string &str) {
+
+
         return std::experimental::string_view();
     }
 
