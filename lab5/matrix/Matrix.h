@@ -5,39 +5,36 @@
 #ifndef JIMP_EXERCISES_MATRIX_H
 #define JIMP_EXERCISES_MATRIX_H
 
+
+#include <cstddef>
+#include <utility>
+#include <string>
+#include <array>
 #include <complex>
+#include <vector>
 
 namespace algebra{
-    class Matrix{
+    class Matrix {
     public:
-        //domyślny konstruktor
         Matrix();
-        //konstruktory parametryczne
-        Matrix(int siz);
-        Matrix(const char*);
-
-        //Rule of five://
-        //1. konstruktor kopiujący
-        Matrix(const Matrix &other_matrix);
-        //2. konstruktor przenoszący
-        Matrix(Matrix &&xxx)=delete;
-        //3. operator przypisania kopiujący
-        Matrix &operator=(const Matrix &xxx)=delete;
-        //4. operator przypisania przenoszący
-        Matrix &operator=(Matrix &&xxx)=delete;
-        //5. Destruktor
-        ~Matrix()=delete;
-
-        void BuildMatrix();
-        void print();
-        Matrix add(const Matrix &other_matrix) const;
-        Matrix sub(const Matrix &other_matrix) const;
-        Matrix mul(const Matrix &other_matrix) const;
-        Matrix div(const Matrix &other_matrix) const;
-        Matrix pow(const int po) const;
+        Matrix(int h, int w);
+        Matrix(const Matrix &matrice);
+        Matrix(std::string phrase);
+        Matrix(const std::initializer_list<std::vector<std::complex<double>>> &elements);
+        std::pair<size_t, size_t> Size(void) const;
+        std::string Print(void) const;
+        Matrix Add(const Matrix &matrice)const;
+        Matrix Sub(const Matrix &matrice)const;
+        Matrix Mul(const Matrix &matrice)const;
+        Matrix Mul(std::complex<double> number)const;
+        Matrix Div(const Matrix &matrice)const;
+        Matrix Div(std::complex<double> number)const;
+        Matrix Pow(int number)const;
     private:
-        std::complex<double> matrix_;
+        std::vector<std::vector<std::complex<double>>> elements_;
     };
+
+    std::string DoubleToString(double number);
 }
 
 
