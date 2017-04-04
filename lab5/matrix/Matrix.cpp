@@ -29,9 +29,38 @@ namespace algebra{
         elements_ = MakeCopy(matrice.elements_);
     }
 
-    Matrix::Matrix(const char *phrase) {
+    Matrix::Matrix(const std::string &phrase) {
+        elements_.clear();
+        int i = 0;
+        int j = 0;
+        std::string number = "";
+        std::stringstream ss;
+        std::complex<double> tmp_value;
 
+        elements_.emplace_back(std::vector<std::complex<double>>());
+        i=1;
+        while (phrase[i] != '\0') {
+            if (phrase[i] != ' ' && phrase[i] != ';' && phrase[i] != ']') {
+                if (phrase[i] != 'i') number += phrase[i];
+                else number += ',';
+            }
+            if (phrase[i] == ' ' || phrase[i] == ';' || phrase[i] == ']') {
+                ss.clear();
+                tmp_value = 0 + 0i;
+                ss << '(' << number << ')';
+                ss >> tmp_value;
+                elements_[j].emplace_back(tmp_value);
+                if(phrase[i] == ';') {
+                    j++;
+                    i++;
+                    elements_.emplace_back(std::vector<std::complex<double>>());
+                }
+                number = "";
+            }
+            i++;
+        }
     }
+
 
     Matrix::Matrix(const std::initializer_list<std::vector<std::complex<double>>> &elements) {
         elements_.clear();
@@ -128,10 +157,29 @@ namespace algebra{
         }
     }
 
+    Matrix Matrix::Mul(std::complex<double> number) const {
+        Matrix answer{(int) this->Size().first, (int) this->Size().second};
 
-    Matrix Matrix::Div(const Matrix &matrice) const {
-        return Matrix();
+        for (int i = 0; i < answer.Size().first; i++) {
+            for (int j = 0; j < answer.Size().second; j++) {
+                answer.elements_[i][j] *= number;
+            }
+        }
+        return answer;
     }
+
+
+    Matrix Matrix::Div(std::complex<double> number) const {
+        Matrix answer{(int) this->Size().first, (int) this->Size().second};
+
+        for (int i = 0; i < answer.Size().first; i++) {
+            for (int j = 0; j < answer.Size().second; j++) {
+                answer.elements_[i][j] = elements_[i][j] / number;
+            }
+        }
+        return answer;
+    }
+
 
 
     Matrix Matrix::Pow(int n)const {
