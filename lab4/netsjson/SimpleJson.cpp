@@ -1,15 +1,15 @@
 //
-// Created by matematyk60 on 27.03.17.
+// Created by jan on 27.03.17.
 //
 
 #include <sstream>
 #include "SimpleJson.h"
 
 
-namespace nets{
+namespace nets {
     std::experimental::optional<JsonValue> JsonValue::ValueByName(const std::string &name) const {
-        for(auto n : *map_){
-            if(!n.first.compare(name)){
+        for (auto n : *map_) {
+            if (!n.first.compare(name)) {
                 return std::experimental::make_optional(n.second);
             }
         }
@@ -20,23 +20,23 @@ namespace nets{
         std::stringstream ss;
 
         std::string answer = "";
-        if(integer_ != nullptr){
+        if (integer_ != nullptr) {
             ss << *integer_;
             ss >> answer;
             return answer;
         }
 
-        if(float_ != nullptr){
+        if (float_ != nullptr) {
             ss << *float_;
             ss >> answer;
             return answer;
         }
 
-        if(string_ != nullptr){
+        if (string_ != nullptr) {
             std::string copy = *string_;
             answer += '\"';
-            for(int i = 0 ; i < copy.length() ; i++){
-                if(copy[i] == '\\' || copy[i] == '\"'){
+            for (int i = 0; i < copy.length(); i++) {
+                if (copy[i] == '\\' || copy[i] == '\"') {
                     answer += '\\';
                 }
                 answer += copy[i];
@@ -46,45 +46,39 @@ namespace nets{
             return answer;
         }
 
-        if(boolean_ != nullptr){
-            if(*boolean_){
+        if (boolean_ != nullptr) {
+            if (*boolean_) {
                 return "true";
             } else {
                 return "false";
             }
         }
 
-        if(vector_ != nullptr){
+        if (vector_ != nullptr) {
             answer += '[';
-            for(auto n  : *vector_ ){
-                answer+=n.ToString();
-                answer+=", ";
+            for (auto n  : *vector_) {
+                answer += n.ToString();
+                answer += ", ";
             }
             answer.erase(answer.length() - 2, 2);
             answer += ']';
             return answer;
         }
 
-        if(map_ != nullptr){
+        if (map_ != nullptr) {
             answer += '{';
-            for( auto n : *map_){
+            for (auto n : *map_) {
                 answer += '\"';
                 answer += n.first;
                 answer += "\": ";
                 answer += n.second.ToString();
                 answer += ", ";
             }
-            answer.erase(answer.length()-2,2);
+            answer.erase(answer.length() - 2, 2);
             answer += '}';
             return answer;
         }
-
-
-
-
-
     }
-
 
     JsonValue::JsonValue(const char *text) {
         integer_ = nullptr;
@@ -156,27 +150,4 @@ namespace nets{
         vector_ = new std::vector<JsonValue>;
         *vector_ = vec;
     }
-/*
-    JsonValue::~JsonValue(){
-        if(integer_ != nullptr){
-            delete integer_;
-        }
-        if(float_ != nullptr) {
-            delete float_;
-        }
-        if(boolean_!= nullptr) {
-            delete boolean_;
-        }
-        if(string_ != nullptr) {
-            delete string_;
-        }
-        if(map_ != nullptr) {
-            delete map_;
-        }
-        if(vector_ != nullptr) {
-            delete vector_;
-        }
-    }
-*/
-
 }
