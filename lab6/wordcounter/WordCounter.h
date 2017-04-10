@@ -5,79 +5,34 @@
 #ifndef JIMP_EXERCISES_WORDCOUNTER_H
 #define JIMP_EXERCISES_WORDCOUNTER_H
 
-#include <iostream>
+#include "Counts.h"
+#include "Word.h"
+
 #include <string>
-#include <iomanip>
-#include <strstream>
-#include <istream>
 #include <fstream>
-#include <vector>
+#include <utility>
 #include <list>
 #include <set>
+#include <initializer_list>
 
-using namespace std;
 namespace datastructures {
-    class Word {
-    public:
-        Word();
-
-        Word(const string &word);
-
-        bool operator==(const Word &other_object) const;
-
-        bool operator<(const Word &other) const;
-
-        bool operator>(const Word &other) const;
-
-        string GetWord(void) const;
-
-
-        friend class WordCounter;
-
-    private:
-        string word_;
-    };
-
-    class Counts {
-    public:
-        Counts();
-
-        Counts(int value);
-
-        int GetCounts(void) const;
-
-        void SetCount(int value);
-
-
-        Counts &operator++(int);
-
-        operator int() const;
-
-
-        bool operator<(const Counts &other) const;
-
-        bool operator>(const Counts &other) const;
-
-        friend bool operator==(const int int_value, const Counts &other_object);
-
-
-        friend class WordCounter;
-
-    private:
-        int counts_;
-
-    };
-
-    bool operator==(const int int_value, const Counts &other_object);
+    using ::std::string;
+    using ::std::ostream;
+    using ::std::set;
+    using ::std::pair;
+    using ::std::fstream;
 
 
     class WordCounter {
     public:
         WordCounter();
 
-        WordCounter(const char *file);
+        WordCounter(const string &path);
 
-        WordCounter(const initializer_list<Word> list1);
+        WordCounter(const std::initializer_list<Word> list);
+
+        ~WordCounter();
+
 
         int TotalWords();
 
@@ -88,14 +43,14 @@ namespace datastructures {
         Counts operator[](const char *word);
 
 
-        friend ostream &operator<<(std::ostream &is, WordCounter &word_counter);
+        friend ostream &operator<<(ostream &is, WordCounter &word_counter);
 
     private:
-        //fstream file_;
-        list <pair<Word, Counts>> wordcontainer_;
+        fstream file_;
+        std::list<pair<Word, Counts>> wordcontainer_;
     };
 
-    ostream &operator<<(std::ostream &is, WordCounter &word_counter);
+    ostream &operator<<(ostream &output, WordCounter &wc);
 }
 
 

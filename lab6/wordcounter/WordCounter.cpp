@@ -2,131 +2,83 @@
 // Created by janek on 10.04.17.
 //
 
+#include <string>
+#include <fstream>
+#include <utility>
+#include <list>
+#include <iostream>
+#include <regex>
 #include "WordCounter.h"
 
-
 namespace datastructures {
-    Word::Word() {
-        word_ = "";
-    }
-
-    Word::Word(const string &word) {
-        word_ = word;
-    }
-
-    bool Word::operator==(const Word &other) const {
-        return (this->word_ == other.word_);
-    }
-
-    bool Word::operator<(const Word &other) const {
-        return (this->word_ < other.word_);
-    }
-
-    bool Word::operator>(const Word &other) const {
-        return (this->word_ > other.word_);
-    }
-
-
-    std::string Word::GetWord(void) const {
-        return this->word_;
-    }
-
-
-    Counts::Counts() {
-        counts_ = 0;
-    }
-
-    Counts::Counts(int value) {
-        counts_ = value;
-    }
-
-    int Counts::GetCounts(void) const {
-        return this->counts_;
-    }
-
-    void Counts::SetCount(int value) {
-        counts_ = value;
-    }
-
-
-    Counts &Counts::operator++(int) {
-        this->counts_++;
-        return *this;
-    }
-
-
-    Counts::operator int() const {
-        return this->counts_;
-    }
-
-    bool Counts::operator<(const Counts &other) const {
-        return (this->counts_ < other.counts_);
-    }
-
-    bool Counts::operator>(const Counts &other) const {
-        return (this->counts_ > other.counts_);
-    }
-
-    bool operator==(const int int_value, const Counts &other) {
-        return (int_value == other.counts_);
-    }
-
 
     WordCounter::WordCounter() {}
 
-    WordCounter::WordCounter(const char *file) {
-        ifstream file_open;
-        file_open.open(file);
-        if (file_open.good()) {
-            string word = "";
-            string tmpstr = "";
-            while (file_open >> word) {
+    WordCounter::WordCounter(const string &path) {
+        string word = "";
+        string tmpstr = "";
+        Word tmpWord;
+        bool isWord;
+
+        file_.open(path, fstream::in);
+
+        if (!file_.good())
+            std::cout << "open error" << std::endl;
+        else {
+            while (file_ >> word) {
                 tmpstr = "";
-                for (char c:word) {
+                for (char c: word) {
                     if (c >= 65 and c <= 90) {
                         c += 32;
                     }
                     if (c >= 97 and c <= 122) {
-                        tmpstr.push_back(c);
+                        tmpstr += c;
                     }
                 }
-                Word tmp_word(tmpstr);
-                bool is_word = false;
+
+                tmpWord.word_ = tmpstr;
+                isWord = false;
+
                 for (pair<Word, Counts> &n: this->wordcontainer_) {
-                    if (tmp_word == n.first) {
+                    if (tmpWord == n.first) {
                         n.second++;
-                        is_word = true;
+                        isWord = true;
                         break;
                     }
                 }
-                if (is_word == false) {
-                    this->wordcontainer_.push_front(pair<Word, Counts>{tmp_word, Counts(1)});
+                if (!isWord) {
+                    this->wordcontainer_.push_front(pair<Word, Counts>{tmpWord, Counts(1)});
                 }
             }
             this->wordcontainer_.sort();
         }
-        return;
     }
 
-    WordCounter::WordCounter(const std::initializer_list<Word> list) {
+
+    WordCounter::WordCounter(const std::initializer_list<datastructures::Word> list) {
         string tmpstr = "";
-        bool is_word = false;
+        bool isWord;
 
         for (Word word: list) {
-            is_word = false;
+            isWord = false;
             for (pair<Word, Counts> &n: this->wordcontainer_) {
                 if (word == n.first) {
                     n.second++;
-                    is_word = true;
+                    isWord = true;
                 }
             }
-            if (!is_word) {
+            if (!isWord) {
                 wordcontainer_.push_back(pair<Word, Counts>{word, Counts(1)});
             }
         }
         this->wordcontainer_.sort();
     }
 
+
+    WordCounter::~WordCounter() {
+        if (file_.is_open())
+            file_.close();
+    }
 
     int WordCounter::TotalWords() {
         int words = 0;
@@ -170,12 +122,12 @@ namespace datastructures {
 
 
     ostream &operator<<(ostream &output, WordCounter &wc) {
-        list<pair<Word, Counts>>::reverse_iterator ite;
+        std::list<pair<Word, Counts>>::reverse_iterator ite;
 
         for (ite = wc.wordcontainer_.rbegin(); ite != wc.wordcontainer_.rend(); ite++) {
             output << ite->first.GetWord();
             output << " ";
-            output << ite->second.GetCounts();
+            output << ite->second.GetCount();
             output << "\n";
         }
         return output;
