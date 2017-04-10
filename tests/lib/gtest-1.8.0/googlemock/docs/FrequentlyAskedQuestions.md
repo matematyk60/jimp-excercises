@@ -357,14 +357,14 @@ class Derived : public Base {
  public:
   ...
  private:
-  std::string value_;
+  std::string counts_;
 };
 
 ...
   Base* p = new Derived;
   ...
   delete p;  // Surprise! ~Base() will be called, but ~Derived() will not
-             // - value_ is leaked.
+             // - counts_ is leaked.
 ```
 
 By changing `~Base()` to virtual, `~Derived()` will be correctly
