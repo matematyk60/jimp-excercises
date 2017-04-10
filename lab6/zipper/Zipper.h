@@ -2,13 +2,16 @@
 // Created by janek on 04.04.17.
 //
 
-#ifndef POINT_H
-#define POINT_H
+
+#ifndef JIMP_EXERCISES_POINTTEST_H
+#define JIMP_EXERCISES_POINTTEST_H
+
 #include <iostream>
+#include <exception>
 
 class Point {
 public:
-
+    Point() : x_(0), y_(0) {};
 
     void SetX(double x);
     void SetY(double y);
@@ -16,7 +19,9 @@ public:
     //opcjonalna definicja pozwalająca na uzyskanie
     //dostępu do prywatnych pól z wewnątrz definicji
     //funkcji zadeklarowanej poniżej
-    //friend std::istream& operator>>(std::istream &, Point&);
+//    friend std::istream& operator>>(std::istream &, Point&);
+    friend std::ostream &operator<<(std::ostream &is, Point &point);
+    friend std::istream &operator>>(std::istream &is, Point &point);
 
 
 private:
@@ -26,9 +31,8 @@ private:
 //właściwa deklaracja, przeciążająca
 //operator >> dla strumienia wejściowego
 //i klasy punkt
-std::istream& operator>>(std::istream &is, Point& point);
+std::istream &operator>>(std::istream &is, Point &point);
 
-std::ostream& operator<<(std::ostream &os, Point& point);
+std::ostream &operator<<(std::ostream &is, Point &point);
 
-
-#endif
+#endif //JIMP_EXERCISES_POINTTEST_H

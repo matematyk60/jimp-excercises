@@ -29,7 +29,7 @@ namespace academia{
     };
 
 
-
+/*
     class Student{
     public:
         std::istream& operator>>(std::istream &input, Student& sy);
@@ -55,6 +55,7 @@ namespace academia{
     private:
         Student student;
     };
+    */
 }
 
 
