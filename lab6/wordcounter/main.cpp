@@ -9,5 +9,7 @@ using std::cout;
 
 
 int main(){
-    ;
+    Word jijj{"dsa"};
+    WordCounter counter {Word("a"), Word("p"), Word("a"), Word("a"), Word("hi"), Word("voltage"), Word("voltage")};
+
 }

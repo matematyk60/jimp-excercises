@@ -6,46 +6,38 @@
 #define JIMP_EXERCISES_WORDCOUNTER_H
 
 #include <string>
-#include <list>
+#include <vector>
 #include <set>
+#include <iostream>
+#include "Word.h"
+#include "Counts.h"
 
 using std::string;
 
 namespace datastructures{
-    class Counts{
-    public:
-        Counts();
-        Counts(int number);
-        int GetCounts();
 
-    private:
-        int number_;
-    };
 
-    class Word{
-    public:
-        Word();
-        Word(const char *text);
-        bool Compare(const char *text);
-        string GetWord();
-    private:
-        string word_;
-    };
+
 
     class WordCounter{
         public:
         WordCounter();
-        WordCounter(std::pair<Word,Counts> new_pair);
         WordCounter(std::initializer_list<Word> elements);
+        ~WordCounter();
 
-        std::set<Word> Words();
-        int TotalWords();
-        int DistinctWords();
-        bool IsAlreadyHere(const char *text);
+        std::set<Word> Words()const;
+        int TotalWords()const;
+        int DistinctWords()const;
+        bool IsAlreadyHere(const Word &text);
 
-        int operator[](const char *text)const;
+        void Sort();
+
+        Counts operator[](const char *text)const;
+        friend std::ostream &operator<<(std::ostream& output,const WordCounter &wc);
+
+
     private:
-        std::list<std::pair<Word,Counts>> index_;
+        std::vector<std::pair<Word,Counts>> index_;
     };
 
 

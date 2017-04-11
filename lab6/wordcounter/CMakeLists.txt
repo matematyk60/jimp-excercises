@@ -1,8 +1,8 @@
 
 project(wordcounter)
 
-set(HEDEAR_FILES WordCounter.h)
-set(SOURCE_FILES WordCounter.cpp)
+set(HEDEAR_FILES WordCounter.h Word.h Counts.h)
+set(SOURCE_FILES WordCounter.cpp Word.cpp Counts.cpp)
 
 add_library(libwordcounter STATIC ${SOURCE_FILES})
 target_include_directories(libwordcounter PUBLIC .)
