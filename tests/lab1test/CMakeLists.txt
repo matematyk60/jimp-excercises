@@ -10,7 +10,7 @@ set(REVERSE_STRING_SRC ReverseStringTest.cpp)
 set(PALINDROME_SRC PalindromeTest.cpp)
 set(MULTIPLICATION_TABLE_SRC MultiplicationTableTest.cpp)
 set(DOUBLE_BASE_PALINDROME_SRC DoubleBasePalindromeTest.cpp)
-set(SOURCE_FILES ${FACTORIAL_SRC} ${REVERSE_STRING_SRC} ${PALINDROME_SRC} ${MULTIPLICATION_TABLE_SRC} ${DOUBLE_BASE_PALINDROME_SRC} ../../lab5/memorychunk/MemoryChunk.cpp ../../lab5/memorychunk/MemoryChunk.h ../../lab6/zipper/Zipper.cpp ../../lab6/zipper/Zipper.h)
+set(SOURCE_FILES ${FACTORIAL_SRC} ${REVERSE_STRING_SRC} ${PALINDROME_SRC} ${MULTIPLICATION_TABLE_SRC} ${DOUBLE_BASE_PALINDROME_SRC} ../../lab5/memorychunk/MemoryChunk.cpp ../../lab5/memorychunk/MemoryChunk.h ../../lab6/zipper/Zipper.cpp ../../lab6/zipper/Zipper.h ../../lab7/arrayfill/ArrayFill.cpp ../../lab7/arrayfill/ArrayFill.h ../../lab7/arrayfill/main.cpp)
 
 set(GTEST_LIBS gtest gtest_main gmock gmock_main)
 
