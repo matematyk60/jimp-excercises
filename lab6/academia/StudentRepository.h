@@ -1,61 +1,40 @@
 //
-// Created by janek on 04.04.17.
+// Created by janek on 10.04.17.
 //
 
 #ifndef JIMP_EXERCISES_STUDENTREPOSITORY_H
 #define JIMP_EXERCISES_STUDENTREPOSITORY_H
 
+#include <set>
+#include <vector>
 #include <string>
+#include "Student.h"
 
-namespace academia{
-    using ::std::string;
-    using ::std::ostream;
-    using ::std::istream;
-
-    class StudyYear{
+namespace academia {
+    class StudentRepository {
     public:
-        StudyYear();
-        StudyYear(int year);
+        StudentRepository(initializer_list<Student> in);
 
-        void operator ++();
-        void operator --();
+        void AddStudent(Student &in);
 
-        friend std::istream& operator>>(std::istream &input, StudyYear& sy);
+        void RemoveStudent(Student out);
 
-        friend std::ostream& operator<<(std::ostream &output, StudyYear& sy);
+        void RemoveStudent(std::string outbyid);
+
+        int StudentCount();
+
+        Student &operator[](const std::string &searchforid);
+
+        friend bool operator==(StudentRepository &firstrep, StudentRepository &secondrep);
 
     private:
-        int year_;
+        std::vector<Student> studentcontainer_;
+
     };
 
+    bool operator==(StudentRepository &firstrep, StudentRepository &secondrep);
 
-/*
-    class Student{
-    public:
-        std::istream& operator>>(std::istream &input, Student& sy);
-
-        std::ostream& operator<<(std::ostream &output, Student& sy);
-
-    private:
-        string id_;
-        string first_name_;
-        string last_name_;
-        string program_;
-        StudyYear year_;
-    };
-
-
-
-    class StudentRepository{
-    public:
-        std::istream& operator>>(std::istream &input, StudentRepository& sy);
-
-        std::ostream& operator<<(std::ostream &output, StudentRepository& sy);
-
-    private:
-        Student student;
-    };
-    */
+    std::ostream &operator<<(std::ostream &os, StudentRepository stdrep);
 }
 
 

@@ -1,62 +1,66 @@
 //
-// Created by janek on 04.04.17.
+// Created by janek on 10.04.17.
 //
 
 #include "StudentRepository.h"
 
-namespace academia{
-    StudyYear::StudyYear() {
-        year_ = 1;
+namespace academia {
+    StudentRepository::StudentRepository(initializer_list<Student> in) {
+        studentcontainer_.assign(in);
     }
 
-    StudyYear::StudyYear(int year) {
-        year_ = year;
+    void StudentRepository::AddStudent(Student &in) {
+        studentcontainer_.push_back(in);
     }
 
-    void StudyYear::operator++() {
-        year_ += 1;
+    void StudentRepository::RemoveStudent(std::string outbyid) {
+        bool flag = true;
+        int i = 0;
+        while (i < studentcontainer_.size() && flag) {
+            if (studentcontainer_[i].Id() == outbyid)
+                flag = false;
+            i++;
+        }
+        if (!flag)
+            studentcontainer_.erase(studentcontainer_.begin() + i);
     }
 
-    void StudyYear::operator--() {
-        year_ -= 1;
+    void StudentRepository::RemoveStudent(Student out) {
+        std::string outbyid = out.Id();
+        this->RemoveStudent(outbyid);
     }
 
-    istream& operator>>(istream &input, StudyYear &sy) {
-        int d;
-        input >> d;
-        sy.year_ = d;
-        return input;
+    int StudentRepository::StudentCount() {
+        return studentcontainer_.size();
     }
 
-    ostream& operator<<(ostream &output, StudyYear &sy) {
-        output << sy.year_;
-        return output;
+    Student &StudentRepository::operator[](const std::string &searchforid) {
+        bool flag = true;
+        int i = 0;
+        while (i < studentcontainer_.size() && flag) {
+            if (studentcontainer_[i].Id() == searchforid)
+                flag = false;
+            i++;
+        }
+        return studentcontainer_[i];
+
     }
 
-
-
-
-/*
-
-    std::istream &StudentRepository::operator>>(std::istream &input, StudentRepository &sy) {
-        return input;
+    bool operator==(StudentRepository &firstrep, StudentRepository &secondrep) {
+        bool thesame = true;
+        if (firstrep.StudentCount() != secondrep.StudentCount())
+            thesame = false;
+        for (int i = 0; i < firstrep.StudentCount() && thesame; ++i) {
+            if (!(firstrep.studentcontainer_[i] == secondrep.studentcontainer_[i]))
+                thesame = false;
+        }
+        return thesame;
     }
 
-    std::ostream &operator<<(std::ostream &output, StudentRepository &sy) {
-        return output;
+    std::ostream &operator<<(std::ostream &os, StudentRepository stdrep) {
+        for (int i = 0; i < stdrep.StudentCount(); ++i) {
+            os << stdrep;
+            os << std::endl;
+        }
     }
-
-
-
-
-
-
-    std::istream &Student::operator>>(std::istream &input, Student &sy) {
-        return input;
-    }
-
-    std::ostream &operator<<(std::ostream &output, Student &sy) {
-        return output;
-    }
-    */
 }

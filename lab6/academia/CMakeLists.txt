@@ -1,10 +1,10 @@
 
 project(student)
 
-set(HEDEAR_FILES StudentRepository.h)
-set(SOURCE_FILES StudentRepository.cpp)
+set(HEDEAR_FILES Student.h StudyYear.h StudentRepository.h)
+set(SOURCE_FILES Student.cpp StudyYear.cpp StudentRepository.cpp)
 
-add_library(libstudentrepository STATIC ${SOURCE_FILES} ../wordcounter/WordCounter.cpp ../wordcounter/WordCounter.h ../wordcounter/main.cpp)
+add_library(libstudentrepository STATIC ${SOURCE_FILES})
 target_include_directories(libstudentrepository PUBLIC .)
 
 add_executable(student ${SOURCE_FILES} main.cpp)
