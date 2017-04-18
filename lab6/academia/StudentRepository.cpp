@@ -6,60 +6,77 @@
 
 
 namespace academia{
-    StudyYear::StudyYear(int year) {
+
+    Student::Student(string id, string first_name, string last_name, string program, StudyYear year) {
+        id_ = id;
+        first_name_ = first_name;
+        last_name_ = last_name;
+        program_ = program;
         year_ = year;
     }
 
-    StudyYear::StudyYear(){
-        year_ = 1;
-    }
-
-    void StudyYear::operator--(void) {
-        year_ -= 1;
-    }
-
-    void StudyYear::operator++(void) {
-        year_ += 1;
-    }
-
-    const bool StudyYear::operator==(const StudyYear &Year) const{
-        if(Year.year_ == this->year_){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    const bool StudyYear::operator==(int value)const {
-        if(this->year_ == value){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    StudyYear::operator int() const {
-        return year_;
-    }
-
-    const bool StudyYear::operator<(const StudyYear &Year) const{
-        if(this->year_ < Year.year_){
+    const bool Student::operator==(const Student &other) const {
+        if(this->id_ == other.id_){
             return true;
         } else {
             return false;
         }
     }
 
-    std::istream& operator>>(std::istream & input, StudyYear &p){
-        int tmp;
-        input >> tmp;
-        p.year_ = tmp;
-        return input;      // Umożliwia cin >> a >> b >> c;
+    void Student::ChangeFirstName(const string new_name) {
+        first_name_= new_name;
     }
 
-    std::ostream &operator<<(std::ostream &output, StudyYear &p) {
-        output << p.year_;
-
-        return output;
+    void Student::ChangeLastName(const string new_name) {
+        last_name_ = new_name;
     }
+
+    const string Student::Id(void) const {
+        return id_;
+    }
+
+    const string Student::FirstName(void) const {
+        return first_name_;
+    }
+
+    const string Student::LastName(void) const {
+        return last_name_;
+    }
+
+    const string Student::Program(void) const {
+        return program_;
+    }
+
+    const StudyYear Student::Year(void) const {
+        return year_;
+    }
+
+    StudentRepository::StudentRepository(std::initializer_list<Student> init) {
+        for(auto n : init){
+            repo_.emplace_back(n);
+        }
+    }
+
+    Student& StudentRepository::operator[](const string cmp) {
+        for(auto &n : repo_){
+            if(n.Id() == cmp){
+                return n;
+            }
+        }
+        Student null_student {};
+        return null_student;
+    }
+
+    unsigned long StudentRepository::StudentCount(void) const{
+        return repo_.size();
+    }
+
+    const bool StudentRepository::operator==(const StudentRepository &other) const{
+        if(this->StudentCount() == other.StudentCount()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
 }
