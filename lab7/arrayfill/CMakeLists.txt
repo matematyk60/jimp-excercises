@@ -7,7 +7,7 @@ set(SOURCE_FILES ArrayFill.cpp)
 add_library(libarrayfill STATIC ${SOURCE_FILES})
 target_include_directories(libarrayfill PUBLIC .)
 
-add_executable(arrayfill ${SOURCE_FILES} main.cpp ../point3D/Point3D.cpp ../point3D/Point3D.h ../point3D/main.cpp)
+add_executable(arrayfill ${SOURCE_FILES} main.cpp ../point3D/Point3D.cpp ../point3D/Point3D.h ../point3D/main.cpp ../punkt3d/Punkt3d.cpp ../punkt3d/Punkt3d.h ../punkt3d/main.cpp)
 
 target_link_libraries(arrayfill libarrayfill)
 

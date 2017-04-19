@@ -1,8 +1,8 @@
 
 project(point3d)
 
-set(HEDEAR_FILES Point3d.h)
-set(SOURCE_FILES Point3d.cpp)
+set(HEDEAR_FILES Point3D.h)
+set(SOURCE_FILES Point3D.cpp)
 
 add_library(libpoint3d STATIC ${SOURCE_FILES})
 target_include_directories(libpoint3d PUBLIC .)
