@@ -2,39 +2,43 @@
 // Created by janek on 19.04.17.
 //
 
-
-/*
- * zadanie 5:
- *  najpierw wywoływany jest konstruktor klasy bazowej( Point 2d)
- *  a następnie klasa pochodna, czyli Punkt 3d
- *  Destruktory wywoływane są w odwrotnej kolejności
- *  najpierw Point 3d, potem Point 2d
- */
-/*
- * zadanie 6
- *  To dziwne wywołanie zwróci odlagłośc smiędzy punktami w postaci 2d
- */
-/*
- * zadanie 7
- *  z racji tego że Punkt 3d nie ma zdefiniowanego operatora <<
- *  wywołany zostanie najbliższy operator z klasy bazowej
- */
-
-
 #include "Point3D.h"
 using namespace geometry;
+using namespace std;
 
 int main() {
-    Punkt3d a(1,0), b(2,1,1);
-    std::cout<<"Dist "<< a.Distance(b)<<"\n";
+    /*
+     * zadanie 5:
+     * Jako pierwszy wywoływany jest konstruktor klasy bazowej (2d)
+     * Później konstruktor klasy pochodnej (3d)
+     * W kontraście destruktory są wywoływane odwrotnie
+     * Najpierw zostaje niszczona klasa pochodna, a później klasa bazowa
+     */
+    //Punkt3d a(1,0), b(2,1,1);
 
-//    Point punkt2d(1,1);
-//    Punkt3d punkt3d(1,0,0);
-//
-//    std::cout<<"pkt 2d i pkt 3d: "<<punkt2d.Distance(punkt3d)<<"\n";
 
-    //Punkt3d p3d(1,2,3);
-    //std::cout << p3d << std::endl;
+
+
+    /*
+     * zadanie 6:
+     * Zwraca odległość pomiędzy punktami w 2d
+     */
+    //Punkt3d a(1,0), b(2,1,1);
+    //cout << endl << endl;
+    //std::cout << "Dist " << a.Distance(b) << endl;;
+    //cout << endl << endl;
+
+
+
+    /*
+     * zadanie 7:
+     * Punkt 3d nie ma przeciążonego operatora <<,
+     * dlatego zostanie wywołany operator klasy bazowej
+     */
+    Punkt3d p3d(1, 2, 3);
+    cout << endl << endl;
+    std::cout << p3d << std::endl;
+    cout << endl << endl;
 
     return 0;
 }
