@@ -6,7 +6,7 @@
 #define JIMP_EXERCISES_POINT_H
 #include <ostream>
 
-namespace geometry{
+namespace geometry {
 
     class Point {
     public:
@@ -29,9 +29,13 @@ namespace geometry{
 
         void SetY(double y);
 
+        friend std::ostream &operator<<(std::ostream &out, const Point &other);
+
     private:
         double x_, y_;
     };
+
+    std::ostream &operator<<(std::ostream &out, const Point &other);
 }
 
 

@@ -53,6 +53,10 @@ namespace geometry{
     void Point::SetY(double y) {
         y_ = y;
     }
+
+    std::ostream& operator<<(std::ostream& out, const Point &other){
+        out<<"("<<other.GetX()<<", "<<other.GetY()<<")";
+    }
 }
 
 
