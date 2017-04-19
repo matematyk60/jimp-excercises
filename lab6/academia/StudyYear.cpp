@@ -20,13 +20,13 @@ namespace academia {
     }
 
     StudyYear &StudyYear::operator--() {
-        //if (studyyear_>0)
-        --studyyear_;
+        if (studyyear_ > 0)
+            --studyyear_;
     }
 
     StudyYear StudyYear::operator--(int) {
-        //if (studyyear_>0)
-        studyyear_--;
+        if (studyyear_ > 0)
+            studyyear_--;
         return studyyear_;
     }
 
@@ -45,12 +45,6 @@ namespace academia {
     bool operator<=(const StudyYear oneman, const StudyYear otherman) {
         return (oneman.GetYear() <= otherman.GetYear());
     }
-//    bool operator==(const StudyYear oneman, const StudyYear otherman){
-//        return (oneman.GetYear()==otherman.GetYear());
-//    }
-//    bool operator==(const StudyYear oneman, const int othervalue ){
-//        return (oneman.GetYear()==othervalue);
-//    }
 
     std::istream &operator>>(std::istream &input, StudyYear howlongread) {
         input >> howlongread.studyyear_;
@@ -65,5 +59,4 @@ namespace academia {
     StudyYear::operator int() const {
         return studyyear_;
     }
-
-}//end of namespace
+}

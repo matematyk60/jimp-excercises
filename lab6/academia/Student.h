@@ -23,8 +23,7 @@ namespace academia {
 
         Student(string id, string first, string last, string program, int y);
 
-//        Student(initializer_list<Student> in);
-//        ~Student();
+
         string Id() const;
 
         string FirstName() const;
@@ -53,7 +52,7 @@ namespace academia {
         std::string id_, first_name_, last_name_, program_;
         StudyYear year_;
 
-    }; //end of class
+    };
 
     bool operator==(const Student std, const Student std2);
 
@@ -64,8 +63,7 @@ namespace academia {
     std::istream &operator>>(std::istream &input, Student &student);
 
     std::ostream &operator<<(std::ostream &output, Student &student);
-
-}//end of namespace
+}
 
 
 #endif //JIMP_EXERCISES_STUDENT_H

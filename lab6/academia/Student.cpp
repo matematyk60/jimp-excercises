@@ -13,7 +13,7 @@ using std::initializer_list;
 
 namespace academia {
 
-    //kostruktory:
+
     Student::Student() {}
 
     Student::Student(string id, string first, string last, string program, int y) :
@@ -21,14 +21,9 @@ namespace academia {
             first_name_(first),
             last_name_(last),
             program_(program),
-            year_(y) { /*pusto tu*/ }
-
-//    Student::Student(initializer_list<Student> in) {}
-
-//    Student::~Student() {}
+            year_(y) {}
 
 
-    //dostęp do poszczególnych pól:
     string Student::Id() const { return id_; }
 
     string Student::FirstName() const { return first_name_; }
@@ -65,13 +60,9 @@ namespace academia {
     }
 
 
-//    void IgnoreWaste(std::istream &is){
-//        is>>std::ws;
-//    }
-
     std::istream &operator>>(std::istream &input, Student &student) {
         input >> student.id_ >> student.first_name_ >> student.last_name_ >> student.program_ >> student.year_;
-//        IgnoreWaste(input);
+        return input;
     }
 
     std::ostream &operator<<(std::ostream &output, Student &student) {
@@ -81,4 +72,4 @@ namespace academia {
         output << "Program: " << student.Program();
         output << "Year: " << student.Year();
     }
-}//end of namespace
+}

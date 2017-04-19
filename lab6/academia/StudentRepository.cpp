@@ -34,6 +34,9 @@ namespace academia {
         return studentcontainer_.size();
     }
 
+
+    
+
     Student &StudentRepository::operator[](const std::string &searchforid) {
         bool flag = true;
         int i = 0;
@@ -62,5 +65,6 @@ namespace academia {
             os << stdrep;
             os << std::endl;
         }
+        return os;
     }
 }
