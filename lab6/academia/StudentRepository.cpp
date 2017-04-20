@@ -67,4 +67,13 @@ namespace academia {
         }
         return os;
     }
+
+    std::vector<Student> StudentRepository::FindByQuery(const Query &query) {
+        std::vector<Student> result;
+        for (auto &&item : studentcontainer_) {
+            if (query.Accept(item))
+                result.push_back(item);
+        }
+        return result;
+    }
 }

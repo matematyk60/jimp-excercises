@@ -11,7 +11,10 @@
 #include "Student.h"
 
 namespace academia {
-
+    class Query {
+    public:
+        virtual bool Accept(const Student &student) const =0;
+    };
     
 
     class StudentRepository {
@@ -25,6 +28,8 @@ namespace academia {
         void RemoveStudent(std::string outbyid);
 
         int StudentCount();
+
+        std::vector<Student> FindByQuery(const Query &query);
 
         Student &operator[](const std::string &searchforid);
 
