@@ -8,23 +8,29 @@
 
 #include <Student.h>
 #include <vector>
+#include <memory>
+
+using std::unique_ptr;
 
 namespace academia{
     class Query{
     public:
         virtual bool Accept(const Student &student) const = 0;
+        virtual ~Query() {};
     };
 
     class ByFirstName : public Query{
     public:
         ByFirstName(string name = "");
         bool Accept(const Student &student) const override;
+
     private:
         string name_;
     };
 
     class ByLastName : public Query{
     public:
+
         ByLastName(string name = "");
         bool Accept(const Student &student) const override;
     private:
@@ -33,6 +39,7 @@ namespace academia{
 
     class ByOneOfPrograms : public Query{
     public:
+
         ByOneOfPrograms(std::initializer_list<string> elements);
         bool Accept(const Student &student) const override;
     private:
@@ -41,6 +48,7 @@ namespace academia{
 
     class ByYearLowerOrEqualTo : public Query {
     public:
+
         ByYearLowerOrEqualTo(StudyYear year);
         bool Accept(const Student &student) const override;
     private:
@@ -49,22 +57,23 @@ namespace academia{
 
     class OrQuery : public Query {
     public:
-        OrQuery(const Query &query1, const Query &query2);
+
+        OrQuery(unique_ptr<Query> q1, unique_ptr<Query> q2);
 
         bool Accept(const Student &student) const override;
     private:
-        Query *query1_;
-        Query *query2_;
+        unique_ptr<Query> q1_;
+        unique_ptr<Query> q2_;
     };
 
     class AndQuery : public Query {
     public:
-        AndQuery(const Query &query1, const Query &query2);
+        AndQuery(unique_ptr<Query> q1, unique_ptr<Query> q2);
 
         bool Accept(const Student &student) const override;
     private:
-        Query *query1_;
-        Query *query2_;
+        unique_ptr<Query> q1_;
+        unique_ptr<Query> q2_;
     };
 
 

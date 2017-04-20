@@ -2,6 +2,7 @@
 // Created by matematyk60 on 20.04.17.
 //
 
+#include <curses.h>
 #include "StudentRepositoryQueries.h"
 
 namespace academia{
@@ -29,6 +30,8 @@ namespace academia{
         }
     }
 
+
+
     ByOneOfPrograms::ByOneOfPrograms(std::initializer_list<string> elements) {
         for(auto n : elements){
             programs_.emplace_back(n);
@@ -45,6 +48,8 @@ namespace academia{
         return false;
     }
 
+
+
     ByYearLowerOrEqualTo::ByYearLowerOrEqualTo(StudyYear year) {
         year_ = year;
     }
@@ -54,22 +59,25 @@ namespace academia{
         return (student.Year() <= year_);
     }
 
-    OrQuery::OrQuery(const Query &query1, const Query &query2) {
-        *query1_ = query1;
-        *query2_ = query2;
+
+
+    OrQuery::OrQuery(unique_ptr<Query> q1, unique_ptr<Query> q2) {
+        q1_ = move(q1);
+        q2_ = move(q2);
     }
 
 
     bool OrQuery::Accept(const Student &student) const {
-        return(query1_->Accept(student) || query2_->Accept(student));
+        return(q1_->Accept(student) || q2_->Accept(student));
     }
 
-    AndQuery::AndQuery(const Query &query1, const Query &query2) {
-        *query1_ = query1;
-        *query2_ = query2;
+
+    AndQuery::AndQuery(unique_ptr<Query> q1, unique_ptr<Query> q2) {
+        q1_ = move(q1);
+        q2_ = move(q2);
     }
 
     bool AndQuery::Accept(const Student &student) const {
-        return(query1_->Accept(student) && query2_->Accept(student));
+        return(q1_->Accept(student) && q2_->Accept(student));
     }
 }
