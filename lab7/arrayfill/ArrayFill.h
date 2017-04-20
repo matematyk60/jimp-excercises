@@ -12,7 +12,10 @@ using ::std::uniform_int_distribution;
 
 using std::unique_ptr;
 
+
+
 namespace arrays{
+
     class ArrayFill {
     public:
         virtual int Value(int index) const =0;
