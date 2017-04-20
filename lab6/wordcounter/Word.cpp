@@ -9,6 +9,11 @@ namespace datastructures{
         word_ = "";
     }
 
+    Word::Word(std::string text) {
+        word_ = text;
+
+    }
+
     Word::Word(const char *text) {
         word_ = text;
     }

@@ -25,6 +25,10 @@ namespace datastructures{
         WordCounter(std::initializer_list<Word> elements);
         ~WordCounter();
 
+        static WordCounter FromInputStream(std::istream *istream);
+
+
+        void Insert(const Word &insert);
         std::set<Word> Words()const;
         int TotalWords()const;
         int DistinctWords()const;

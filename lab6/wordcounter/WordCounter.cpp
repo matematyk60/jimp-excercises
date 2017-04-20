@@ -8,7 +8,16 @@
 #include <algorithm>
 #include <list>
 
+
 using std::cout;
+using std::istream;
+
+void CheckNextChar(istream* is) {
+    int next_char = is->peek();
+    if (next_char == is->end){
+
+    }
+}
 
 
 namespace datastructures {
@@ -34,6 +43,17 @@ namespace datastructures {
         this->Sort();
     }
 
+    void WordCounter::Insert(const Word &insert) {
+        std::pair<Word,Counts> tmp;
+        if(this->IsAlreadyHere(insert)){
+            ;
+        } else {
+            tmp.first = insert;
+            tmp.second = Counts{1};
+            index_.emplace_back(tmp);
+        }
+        this->Sort();
+    }
 
 
     bool WordCounter::IsAlreadyHere(const Word &text){
@@ -89,6 +109,25 @@ namespace datastructures {
             output << std::endl;
         }
         return output;
+    }
+
+    WordCounter WordCounter::FromInputStream(std::istream *input) {
+        WordCounter answer{};
+        string tmp = "";
+        int c;
+        bool creating = false;
+        while(*input){
+            c = input->get();
+            if((65 <= c && c <= 90) || (97 <= c && c <= 122)){
+                creating = true;
+                tmp += (char)c;
+            } else if(creating){
+                answer.Insert(Word{tmp});
+                tmp = "";
+                creating = false;
+            }
+        }
+        return answer;
     }
 
 

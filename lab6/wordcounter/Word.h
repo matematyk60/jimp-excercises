@@ -14,6 +14,7 @@ namespace datastructures{
     public:
         Word();
         Word(const char *text);
+        Word(std::string text);
         bool operator==(const Word &other_object) const;
 
         bool operator<(const Word &other) const;
