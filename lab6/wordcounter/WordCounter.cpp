@@ -12,12 +12,6 @@
 using std::cout;
 using std::istream;
 
-void CheckNextChar(istream* is) {
-    int next_char = is->peek();
-    if (next_char == is->end){
-
-    }
-}
 
 
 namespace datastructures {
