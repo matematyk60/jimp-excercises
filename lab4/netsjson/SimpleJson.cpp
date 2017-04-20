@@ -8,7 +8,7 @@
 
 namespace nets{
     std::experimental::optional<JsonValue> JsonValue::ValueByName(const std::string &name) const {
-        for(auto n : *map_){
+        for(auto &n : *map_){
             if(!n.first.compare(name)){
                 return std::experimental::make_optional(n.second);
             }
@@ -67,10 +67,10 @@ namespace nets{
 
         if(map_ != nullptr){
             answer += '{';
-            for( auto n : *map_){
-                answer += '\"';
-                answer += n.first;
-                answer += "\": ";
+            for( auto &n : *map_){
+                JsonValue tmp(n.first);
+                answer += tmp.ToString();
+                answer += ": ";
                 answer += n.second.ToString();
                 answer += ", ";
             }
