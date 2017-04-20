@@ -4,7 +4,7 @@
 
 #ifndef JIMP_EXERCISES_POINT_H
 #define JIMP_EXERCISES_POINT_H
-#include <ostream>
+#include <iostream>
 
 namespace geometry{
 
@@ -29,9 +29,13 @@ namespace geometry{
 
         void SetY(double y);
 
+        friend std::ostream& operator<<(std::ostream& output, const Point &p);
+
     private:
         double x_, y_;
     };
+
+
 }
 
 

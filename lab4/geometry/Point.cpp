@@ -20,13 +20,13 @@ namespace geometry{
     }
 
     Point::Point(double x, double y) {
-        cout << "Konstruktor parametrowy" << endl;
+        cout << "Konstruktor parametrowy 2d" << endl;
         x_ = x;
         y_ = y;
     }
 
     Point::~Point() {
-        cout << "Destruktor! Nic nie robie, bo nie musze zwalniać pamięci!";
+        cout << "Destruktor 2d! Nic nie robie, bo nie musze zwalniać pamięci!";
         cout << endl;
     }
 
@@ -52,6 +52,11 @@ namespace geometry{
 
     void Point::SetY(double y) {
         y_ = y;
+    }
+
+    std::ostream& operator<<(std::ostream &output, const Point &point) {
+        output << '(' << point.GetX() << ',' << point.GetY() << ')';
+        return output;
     }
 }
 

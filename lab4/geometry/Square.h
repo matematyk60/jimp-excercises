@@ -12,8 +12,11 @@
 using geometry::Point;
 
 namespace geometry{
+
     class Square{
+
     public:
+
         Square();
 
         Square(Point A, Point B, Point D, Point C);
