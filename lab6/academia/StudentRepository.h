@@ -10,7 +10,9 @@
 #include <StudentRepositoryQueries.h>
 #include "StudyYear.h"
 #include "Student.h"
+#include <memory>
 
+using std::unique_ptr;
 using ::std::string;
 
 namespace academia{
@@ -21,7 +23,7 @@ namespace academia{
         Student& operator[](const string cmp);
         unsigned long StudentCount(void)const;
         const bool operator==(const StudentRepository &other)const;
-        std::vector<Student> FindByQuery(const Query &query) const;
+        std::vector<Student> FindByQuery(unique_ptr<Query> query) const;
     private:
         std::vector<Student> repo_;
     };

@@ -22,7 +22,7 @@ namespace academia{
     }
 
     const bool Student::operator<(const Student &other) const {
-        return(other.Id() == this->Id());
+        return(other.Id() < this->Id());
     }
 
     void Student::ChangeFirstName(const string new_name) {

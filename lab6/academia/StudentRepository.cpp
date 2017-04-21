@@ -37,10 +37,10 @@ namespace academia{
         }
     }
 
-    std::vector<Student> StudentRepository::FindByQuery(const Query &query)const {
+    std::vector<Student> StudentRepository::FindByQuery(unique_ptr<Query> query)const {
         std::vector<Student> answer;
         for(auto n : repo_){
-            if(query.Accept(n)){
+            if(query->Accept(n)){
                 answer.emplace_back(n);
             }
         }
