@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+using std::string;
 
 namespace utility{
     class IterableIterator{
@@ -43,6 +44,70 @@ namespace utility{
         std::vector<int>::iterator int_itend_;
         std::vector<std::string>::iterator string_itend_;
 
+    };
+
+    class Enumerate : public Iterable{
+    public:
+        Enumerate(std::vector<std::string> strings);
+        static std::vector<std::pair<int,std::string>> enumerate(std::vector<std::string> strings);
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        Begin() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        End() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        begin() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        end() override;
+
+    private:
+        std::vector<std::pair<int,std::string>> enumerated_;
+    };
+
+    class Product : public Iterable {
+    public:
+        Product(std::vector<int> ints, std::vector<std::string> strings);
+        static std::vector<std::pair<int,std::string>> product(std::vector<int> ints,
+                                                               std::vector<std::string> strings);
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        Begin() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        End() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        begin() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        end() override;
+
+    private:
+        std::vector<std::pair<int,std::string>> products_;
+    };
+
+    class Zipper : public Iterable{
+    public:
+        Zipper(std::vector<int> ints, std::vector<std::string> strings);
+        static std::vector<std::pair<int,std::string>> zip(std::vector<int> ints,
+                                                           std::vector<std::string> strings);
+
+        std::vector<std::pair<int,std::string>>::iterator Begin() override;
+
+        std::vector<std::pair<int,std::string>>::iterator End() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        begin() override;
+
+        std::vector<std::pair<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>>::iterator
+        end() override;
+
+
+    private:
+        std::vector<std::pair<int,std::string>> zipped_;
     };
 }
 
