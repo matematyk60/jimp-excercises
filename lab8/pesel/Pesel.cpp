@@ -49,24 +49,26 @@ namespace academia{
     bool Pesel::PeselCharacter(const char *input) {
         int i = 0;
         while(input[i] != '\0'){
-            if(input[i] < 48 || input[i] > 39){
+            if(input[i] < '0' || input[i] > '9'){
                 return true;
             }
+            i++;
         }
         return false;
     }
 
-    InvalidPeselChecksum::InvalidPeselChecksum(const std::string &pesel, int checksum) : AcademiaDataValidationError(message_) {
-        message_ = "Invalid PESEL(" + pesel + ") checksum: " + std::to_string(checksum);
+    InvalidPeselChecksum::InvalidPeselChecksum(const std::string &pesel, int checksum) : AcademiaDataValidationError(
+            "Invalid PESEL(" + pesel + ") checksum: " + std::to_string(checksum)) {
 
     }
 
-    InvalidPeselLength::InvalidPeselLength(const std::string &pesel, int length) : AcademiaDataValidationError(message_){
-        message_ = "Invalid PESEL(" + pesel + ") length: " + std::to_string(length);
+    InvalidPeselLength::InvalidPeselLength( std::string pesel, int length) :
+            AcademiaDataValidationError("Invalid PESEL(" + pesel + ") length: " +
+                                        std::to_string(length)){
     }
 
-    InvalidPeselCharacter::InvalidPeselCharacter(const std::string &pesel) : AcademiaDataValidationError(message_){
-        message_ = "Invalid PESEL(" + pesel + ") character set";
+    InvalidPeselCharacter::InvalidPeselCharacter(const std::string &pesel) :
+            AcademiaDataValidationError("Invalid PESEL(" + pesel + ") character set") {
     }
 
 

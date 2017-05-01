@@ -19,7 +19,7 @@ namespace academia {
 
     class AcademiaDataValidationError : public std::runtime_error{
     public:
-        AcademiaDataValidationError(std::string message) : std::runtime_error(message_){
+        AcademiaDataValidationError(std::string message) : std::runtime_error(message){
             message_ = message;
         }
         virtual ~AcademiaDataValidationError(){};
@@ -30,13 +30,11 @@ namespace academia {
     class InvalidPeselChecksum : public AcademiaDataValidationError{
     public:
         InvalidPeselChecksum(const std::string &pesel = "PESEL", int checksum = 0);
-    private:
-        std::string message_;
     };
 
     class InvalidPeselLength : public AcademiaDataValidationError{
     public:
-        InvalidPeselLength(const std::string &pesel = "PESEL", int length = 0);
+        InvalidPeselLength(std::string  = "PESEL", int length = 0);
     private:
         std::string message_;
     };
