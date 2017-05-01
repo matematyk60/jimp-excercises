@@ -22,12 +22,42 @@ namespace academia{
         const string LastName(void)const;
         const string Program(void)const;
         const StudyYear Year(void)const;
+        static void ValidateNames(const string &name);
+        static void ValidateNameCharacters(const string &name);
+        static void ValidateAge(int age);
+        static void ValidateProgram(const string &program);
     private:
         string id_;
         string first_name_;
         string last_name_;
         string program_;
         StudyYear year_;
+    };
+
+    class StudentValidationError : public std::invalid_argument{
+    public:
+        StudentValidationError(string message = "ERROR") : std::invalid_argument(message){}
+        virtual ~StudentValidationError() {};
+    };
+
+    class InvalidNameSurname : public StudentValidationError{
+    public:
+        InvalidNameSurname() : StudentValidationError("Invalid name/surname"){}
+    };
+
+    class InvalidNameCharacters : public StudentValidationError{
+    public:
+        InvalidNameCharacters() : StudentValidationError("Invalid name characters"){}
+    };
+
+    class InvalidAge : public StudentValidationError{
+    public:
+        InvalidAge() : StudentValidationError("Invalid AGE!"){}
+    };
+
+    class InvalidProgram : public StudentValidationError{
+    public:
+        InvalidProgram() : StudentValidationError("Invalid Program!"){}
     };
 }
 
