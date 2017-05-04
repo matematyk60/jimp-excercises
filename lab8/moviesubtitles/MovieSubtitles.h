@@ -48,6 +48,48 @@ namespace moviesubs{
         SubtitleEndBeforeStart(std::string message, int line) : SubShiftingError("At line "+std::to_string(line)+": "+message, line){}
     };
 
+    class MissingTimeSpecification : public SubShiftingError{
+    public:
+        MissingTimeSpecification(std::string message, int line) : SubShiftingError("At line "+std::to_string(line)+": "+message, line){}
+    };
+
+    class OutOfOrderFrames : public SubShiftingError{
+    public:
+        OutOfOrderFrames(int line) : SubShiftingError("Out of order frames", line){}
+    };
+
+    class SubRipSubtitles : public MovieSubtitles{
+    public:
+        ostream *ShiftAllSubtitlesBy(int delay, int fps, istream *input, ostream *output) override;
+
+        ostream *ParseLine(int delay, int fps, istream *input, ostream *output, int line_number) override;
+
+        istream *SkipNewLine(istream *input);
+
+        istream *SkipArrow(istream *input);
+
+        istream *SkipColon(istream *input);
+
+        istream *SkipComma(istream *input);
+
+        int GetMiliseconds(istream *input);
+
+        int GetDoubleNumber(istream *input);
+
+        int GetTripleNumber(istream *input);
+
+        std::string GetText(istream *input);
+
+        std::string GetNumberOfLine(istream *input);
+
+        istream *IgnoreWhiteSpaces(istream *input);
+
+        std::string GetString2OfNumber(int number);
+
+        std::string GetString3OfNumber(int number);
+
+    };
+
 
 
 }

@@ -20,7 +20,6 @@ namespace academia {
     class AcademiaDataValidationError : public std::runtime_error{
     public:
         AcademiaDataValidationError(std::string message) : std::runtime_error(message){
-            message_ = message;
         }
         virtual ~AcademiaDataValidationError(){};
     private:
