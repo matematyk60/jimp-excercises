@@ -4,7 +4,7 @@ project(pesel)
 set(HEDEAR_FILES Pesel.h)
 set(SOURCE_FILES Pesel.cpp)
 
-add_library(libpesel STATIC ${SOURCE_FILES} Pesel.cpp Pesel.h main.cpp)
+add_library(libpesel STATIC ${SOURCE_FILES} Pesel.cpp Pesel.h main.cpp ../moviesubtitles/MovieSubtitles.cpp ../moviesubtitles/MovieSubtitles.h ../moviesubtitles/main.cpp)
 target_include_directories(libpesel PUBLIC .)
 
 add_executable(pesel ${SOURCE_FILES} main.cpp)
