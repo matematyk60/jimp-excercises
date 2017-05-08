@@ -159,7 +159,7 @@ int main(){
             "\n";
     std::stringstream so;
     SubRipSubtitles sd;
-    sd.ShiftAllSubtitlesBy(300, 25, &ss,&so);
+    sd.ShiftAllSubtitlesBy(1330, 25, &ss,&so);
     cout << so.str();
 
 }

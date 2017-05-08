@@ -58,5 +58,6 @@ namespace pool{
 
     TextPool::~TextPool() {
     }
+
 }
 

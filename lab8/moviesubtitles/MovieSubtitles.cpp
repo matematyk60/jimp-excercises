@@ -154,6 +154,12 @@ namespace moviesubs{
                    + ":" + GetString2OfNumber((new_frame2-((new_frame2-(new_frame2/3600000)*3600000)/60000)*60000)/1000) + "," +
                    GetString3OfNumber(new_frame2%1000) + "\n" + text + "\n";
 
+        if(input->peek() == -1){
+            *output << '\n';
+        }
+
+        return output;
+
     }
 
     std::string SubRipSubtitles::GetString2OfNumber(int number) {
