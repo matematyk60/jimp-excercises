@@ -17,11 +17,19 @@ namespace academia {
 
     class Serializer;
 
-    class Serializable;
-
-    class Room;
-
     class XmlSerializer;
+
+    class JsonSerializer;
+
+
+    class Serializable {
+    public:
+        virtual void Serialize(Serializer *serializer) const = 0;
+
+        virtual void Serialize(XmlSerializer *xml) const = 0;
+
+        //virtual void Serialize(JsonSerializer *json) const = 0;
+    };
 
 
     class Serializer {
@@ -50,57 +58,8 @@ namespace academia {
     };
 
 
-    class Serializable {
-    public:
-        virtual void Serialize(Serializer *serializer) const = 0;
-
-    };
-
-
-    class Room : public Serializable {
-    public:
-
-        enum Type {
-            COMPUTER_LAB,
-            CLASSROOM,
-            LECTURE_HALL
-        };
-
-        string TypeToString(Type type) const;
-
-        Room(int id, const string &name, Type type);
-
-        void Serialize(Serializer *serializer) const override;
-
-    private:
-        int id_;
-        string name_;
-        Type type_;
-    };
-
-
-    class Building{
-    public:
-
-        enum Type {
-            COMPUTER_LAB,
-            CLASSROOM,
-            LECTURE_HALL
-        };
-
-        string TypeToString(Type type) const;
-
-        Building(int id, const string &name, Type type);
-
-
-    private:
-        int id_;
-        string name_;
-        Type type_;
-    };
-
-
     class XmlSerializer : public Serializer {
+    public:
         XmlSerializer(std::ostream *out) : Serializer(out) {}
 
         void IntegerField(const std::string &field_name, int value) override {
@@ -127,6 +86,7 @@ namespace academia {
 
         void ArrayField(const std::string &field_name,
                         const vector<reference_wrapper<const academia::Serializable>> &value) override {
+
             Header(field_name);
             for (const Serializable &n : value)
                 n.Serialize(this);
@@ -138,9 +98,54 @@ namespace academia {
         }
 
         void Footer(const std::string &object_name) override {
-            *out_ << "<" + object_name + ">";
+            *out_ << "<\\" + object_name + ">";
         }
 
+    };
+
+
+    class Room : public Serializable {
+    public:
+
+        enum Type {
+            COMPUTER_LAB,
+            CLASSROOM,
+            LECTURE_HALL
+        };
+
+        string TypeToString(Type type) const;
+
+        Room(int id, const string &name, Type type);
+
+        void Serialize(Serializer *serializer) const override;
+
+        void Serialize(XmlSerializer *xml) const override;
+
+        //void Serialize(JsonSerializer *json) override;
+
+    private:
+        int id_;
+        string name_;
+        Type type_;
+    };
+
+
+    class Building : public Serializable {
+    public:
+
+        Building(int id, string name, std::initializer_list<Room> rooms);
+
+        void Serialize(Serializer *serializer) const override {}
+
+        void Serialize(XmlSerializer *xml) const override;
+
+        //void Serialize(JsonSerializer *json) override;
+
+
+    private:
+        int id_;
+        string name_;
+        vector<Room> room_;
     };
 }
 

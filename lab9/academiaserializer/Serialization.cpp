@@ -15,6 +15,14 @@ namespace academia {
         type_ = type;
     }
 
+    Building::Building(int id, string name, initializer_list<Room> rooms) {
+        id_ = id;
+        name_ = name;
+        for (const auto &v : rooms) {
+            room_.push_back(v);
+        }
+    }
+
     string Room::TypeToString(Room::Type type) const {
         switch (type) {
             case Type::COMPUTER_LAB:
@@ -35,28 +43,24 @@ namespace academia {
     }
 
 
-    string Building::TypeToString(Building::Type type) const {
-        switch (type) {
-            case Type::COMPUTER_LAB:
-                return "COMPUTER_LAB";
-            case Type::CLASSROOM:
-                return "CLASSROOM";
-            case Type::LECTURE_HALL:
-                return "LECTURE_HALL";
+    void Room::Serialize(XmlSerializer *xml) const {
+        xml->Header("room");
+        xml->IntegerField("id", id_);
+        xml->StringField("name", name_);
+        xml->StringField("type", TypeToString(type_));
+        xml->Footer("room");
+    }
+
+
+    void Building::Serialize(XmlSerializer *xml) const {
+        xml->Header("building");
+        xml->IntegerField("id", id_);
+        xml->StringField("name", name_);
+        xml->Header("rooms");
+        for (auto &v : room_) {
+            v.Serialize(xml);
         }
-    }
-
-    Building::Building(int id, const string &name, Building::Type type) {
-        id_ = id;
-        name_ = name;
-        type_ = type;
-    }
-
-    void Building::Serialize(Serializer *serializer) const {
-        serializer->IntegerField("id", id_);
-        serializer->StringField("name", name_);
-        serializer->Header("room");
-        serializer->Footer("room");
-        serializer->StringField("type", TypeToString(type_));
+        xml->Footer("rooms");
+        xml->Footer("building");
     }
 }
