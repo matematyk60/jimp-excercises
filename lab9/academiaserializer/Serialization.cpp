@@ -51,6 +51,14 @@ namespace academia {
         xml->Footer("room");
     }
 
+    void Room::Serialize(JsonSerializer *json) const {
+        json->Header("room");
+        json->IntegerField("id", id_);
+        json->StringField("name", name_);
+        json->StringField("type", TypeToString(type_));
+        json->Footer("}");
+    }
+
 
     void Building::Serialize(XmlSerializer *xml) const {
         xml->Header("building");
@@ -62,5 +70,22 @@ namespace academia {
         }
         xml->Footer("rooms");
         xml->Footer("building");
+    }
+
+    void Building::Serialize(JsonSerializer *json) const {
+        json->Header("building");
+        json->IntegerField("id", id_);
+        json->StringField("name", name_);
+        json->AddSth("\"rooms\": [");
+        int i = 0;
+        for (auto &v : room_) {
+            v.Serialize(json);
+            i++;
+            if (room_.size() > i) {
+                json->AddSth(", ");
+            }
+        }
+        json->Footer("]");
+        json->Footer("}");
     }
 }

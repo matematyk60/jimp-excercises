@@ -28,7 +28,7 @@ namespace academia {
 
         virtual void Serialize(XmlSerializer *xml) const = 0;
 
-        //virtual void Serialize(JsonSerializer *json) const = 0;
+        virtual void Serialize(JsonSerializer *json) const = 0;
     };
 
 
@@ -104,6 +104,50 @@ namespace academia {
     };
 
 
+    class JsonSerializer : public Serializer {
+    public:
+
+        JsonSerializer(std::ostream *out) : Serializer(out) {}
+
+        void IntegerField(const std::string &field_name, int value) override {
+            *out_ << "\"" + field_name + "\"" + ": " + to_string(value) + ", ";
+        }
+
+        void DoubleField(const std::string &field_name, double value) override {
+            *out_ << "\"" + field_name + "\"" + ": " + to_string(value) + ", ";
+        }
+
+        void StringField(const std::string &field_name, const std::string &value) override {
+            string tmp = ", ";
+            if (field_name == "type") {
+                tmp = "";
+            }
+            *out_ << "\"" + field_name + "\"" + ": " + "\"" + value + "\"";
+            *out_ << tmp;
+        }
+
+        void BooleanField(const std::string &field_name, bool value) override {}
+
+        void SerializableField(const std::string &field_name, const academia::Serializable &value) override {}
+
+        void ArrayField(const std::string &field_name,
+                        const vector<reference_wrapper<const academia::Serializable>> &value) override {}
+
+        void Header(const std::string &object_name) override {
+            *out_ << string("{");
+        }
+
+        void Footer(const std::string &object_name) override {
+            *out_ << object_name;
+        }
+
+        void AddSth(string input) {
+            *out_ << input;
+        }
+
+    };
+
+
     class Room : public Serializable {
     public:
 
@@ -121,7 +165,7 @@ namespace academia {
 
         void Serialize(XmlSerializer *xml) const override;
 
-        //void Serialize(JsonSerializer *json) override;
+        void Serialize(JsonSerializer *json) const override;
 
     private:
         int id_;
@@ -139,7 +183,7 @@ namespace academia {
 
         void Serialize(XmlSerializer *xml) const override;
 
-        //void Serialize(JsonSerializer *json) override;
+        void Serialize(JsonSerializer *json) const override;
 
 
     private:
