@@ -97,4 +97,77 @@ namespace academia {
         serializer->Footer("building");
 
     }
+
+    JsonSerializer::JsonSerializer(std::ostream *output) : Serializer(output) {
+
+    }
+
+    void JsonSerializer::NextField(void) {
+        string tmp = ", ";
+        *output_<< tmp;
+    }
+
+    void JsonSerializer::GetName(const std::string &field_name) {
+        *output_ << "\"" + field_name + "\": ";
+    }
+
+    void JsonSerializer::IntegerField(const std::string &field_name, int value) {
+        GetName(field_name);
+        *output_ << std::to_string(value);
+        NextField();
+    }
+
+    void JsonSerializer::DoubleField(const std::string &field_name, double value) {
+        GetName(field_name);
+        *output_ << std::to_string(value);
+        NextField();
+    }
+
+    void JsonSerializer::StringField(const std::string &field_name, const std::string &value) {
+        GetName(field_name);
+        *output_ << "\"" + value + "\"";
+        if(field_name != "type"){
+            NextField();
+        }
+
+    }
+
+    void JsonSerializer::BooleanField(const std::string &field_name, bool value) {
+        GetName(field_name);
+        *output_ << std::to_string(value);
+        NextField();
+    }
+
+    void JsonSerializer::SerializableField(const std::string &field_name, const Serializable &value) {
+        GetName(field_name);
+        value.Serialize(this);
+        NextField();
+
+    }
+
+    void JsonSerializer::ArrayField(const std::string &field_name,
+                                    const vector<reference_wrapper<const Serializable>> &value) {
+        GetName(field_name);
+        string open = "[", close = "]";
+        *output_ << open;
+        int i  = 1;
+        for(const Serializable &n : value){
+            n.Serialize(this);
+            if(i != value.size()){
+                NextField();
+            }
+            i++;
+        }
+        *output_ << close;
+    }
+
+    void JsonSerializer::Header(const std::string &object_name) {
+        string open = "{";
+        *output_ << open;
+    }
+
+    void JsonSerializer::Footer(const std::string &object_name) {
+        string close = "}";
+        *output_ << close;
+    }
 }

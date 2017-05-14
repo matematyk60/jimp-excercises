@@ -96,6 +96,32 @@ namespace academia{
         string name_;
         std::vector<reference_wrapper<const Serializable>> elements_;
     };
+
+    class JsonSerializer : public Serializer{
+    public:
+        JsonSerializer(std::ostream *output);
+
+        void NextField(void);
+
+        void GetName(const std::string &field_name);
+
+        void IntegerField(const std::string &field_name, int value) override;
+
+        void DoubleField(const std::string &field_name, double value) override;
+
+        void StringField(const std::string &field_name, const std::string &value) override;
+
+        void BooleanField(const std::string &field_name, bool value) override;
+
+        void SerializableField(const std::string &field_name, const Serializable &value) override;
+
+        void
+        ArrayField(const std::string &field_name, const vector<reference_wrapper<const Serializable>> &value) override;
+
+        void Header(const std::string &object_name) override;
+
+        void Footer(const std::string &object_name) override;
+    };
 }
 
 
