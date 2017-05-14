@@ -81,10 +81,10 @@ namespace academia {
         *output_ << "<\\" + object_name + ">";
     }
 
-    Building::Building(int id, string name, std::initializer_list<reference_wrapper<Serializable>> elements) {
+    Building::Building(int id, string name, std::vector<Room> elements) {
         id_ = id;
         name_ = name;
-        for(Serializable &n : elements){
+        for(auto n : elements){
             elements_.emplace_back(n);
         }
     }
@@ -93,7 +93,11 @@ namespace academia {
         serializer->Header("building");
         serializer->IntegerField("id", id_);
         serializer->StringField("name", name_);
-        serializer->ArrayField("rooms", elements_);
+        std::vector<std::reference_wrapper<const Serializable>> tmp;
+        for(const Room &n : elements_){
+            tmp.emplace_back(n);
+        }
+        serializer->ArrayField("rooms", tmp);
         serializer->Footer("building");
 
     }
@@ -170,4 +174,45 @@ namespace academia {
         string close = "}";
         *output_ << close;
     }
+
+    BuildingRepository::BuildingRepository(std::initializer_list<Building> elements) {
+        for( auto n : elements){
+            elements_.emplace_back(n);
+        }
+    }
+
+
+    BuildingRepository::BuildingRepository() {
+        elements_.clear();
+    }
+
+    void BuildingRepository::StoreAll(Serializer *serializer) const {
+        serializer->Header("building_repository");
+        std::vector<std::reference_wrapper<const Serializable>> tmp;
+        for(const Building &n : elements_){
+            tmp.emplace_back(n);
+        }
+        serializer->ArrayField("buildings",tmp);
+        serializer->Footer("building_repository");
+    }
+
+    void BuildingRepository::Add(Building b) {
+        elements_.emplace_back(b);
+    }
+
+    int Building::Id(void) const {
+        return id_;
+    }
+
+    std::experimental::optional<Building> BuildingRepository::operator[](int id) const {
+        for(auto &n : elements_){
+            if(n.Id() == id){
+                return std::experimental::make_optional(n);
+            }
+        }
+
+        return experimental::optional<Building>();
+    }
+
+
 }

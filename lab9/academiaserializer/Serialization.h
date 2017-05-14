@@ -10,6 +10,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <experimental/optional>
 
 using namespace std;
 using namespace std::literals;
@@ -77,8 +78,7 @@ namespace academia{
 
         void SerializableField(const std::string &field_name, const Serializable &value) override;
 
-        void
-        ArrayField(const std::string &field_name, const vector<reference_wrapper<const Serializable>> &value) override;
+        void ArrayField(const std::string &field_name, const vector<reference_wrapper<const Serializable>> &value) override;
 
         void Header(const std::string &object_name) override;
 
@@ -87,14 +87,13 @@ namespace academia{
 
     class Building : public Serializable{
     public:
-        Building(int id, string name, std::initializer_list<reference_wrapper<Serializable>> elements);
-
+        Building(int id, string name, std::vector<Room> elements);
         void Serialize(Serializer *serializer) const override;
-
+        int Id(void) const;
     private:
         int id_;
         string name_;
-        std::vector<reference_wrapper<const Serializable>> elements_;
+        std::vector<Room> elements_;
     };
 
     class JsonSerializer : public Serializer{
@@ -121,6 +120,17 @@ namespace academia{
         void Header(const std::string &object_name) override;
 
         void Footer(const std::string &object_name) override;
+    };
+
+    class BuildingRepository {
+    public:
+        BuildingRepository();
+        BuildingRepository(std::initializer_list<Building> elements);
+        void StoreAll(Serializer *serializer) const;
+        void Add(Building b);
+        std::experimental::optional<Building> operator[](int id) const;
+    private:
+        std::vector<Building> elements_;
     };
 }
 
