@@ -5,8 +5,10 @@
 #include "Serialization.h"
 
 namespace academia {
-    Serializer::Serializer(ostream *out) {
-        out_ = out;
+
+
+    Serializer::Serializer(std::ostream *output) {
+        output_ = output;
     }
 
     Room::Room(int id, const string &name, Room::Type type) {
@@ -15,16 +17,8 @@ namespace academia {
         type_ = type;
     }
 
-    Building::Building(int id, string name, initializer_list<Room> rooms) {
-        id_ = id;
-        name_ = name;
-        for (const auto &v : rooms) {
-            room_.push_back(v);
-        }
-    }
-
-    string Room::TypeToString(Room::Type type) const {
-        switch (type) {
+    std::string Room::TypeToString() const {
+        switch (type_) {
             case Type::COMPUTER_LAB:
                 return "COMPUTER_LAB";
             case Type::CLASSROOM:
@@ -35,57 +29,188 @@ namespace academia {
     }
 
     void Room::Serialize(Serializer *serializer) const {
+        serializer->Header("room");
         serializer->IntegerField("id", id_);
         serializer->StringField("name", name_);
-        serializer->Header("room");
+        serializer->StringField("type", TypeToString());
         serializer->Footer("room");
-        serializer->StringField("type", TypeToString(type_));
     }
 
+    XmlSerializer::XmlSerializer(std::ostream *output) : Serializer(output) {
 
-    void Room::Serialize(XmlSerializer *xml) const {
-        xml->Header("room");
-        xml->IntegerField("id", id_);
-        xml->StringField("name", name_);
-        xml->StringField("type", TypeToString(type_));
-        xml->Footer("room");
     }
 
-    void Room::Serialize(JsonSerializer *json) const {
-        json->Header("room");
-        json->IntegerField("id", id_);
-        json->StringField("name", name_);
-        json->StringField("type", TypeToString(type_));
-        json->Footer("}");
+    void XmlSerializer::IntegerField(const std::string &field_name, int value) {
+        *output_ << "<" + field_name + ">" + std::to_string(value) + "<\\" + field_name + ">";
     }
 
+    void XmlSerializer::DoubleField(const std::string &field_name, double value) {
+        *output_ << "<" + field_name + ">" + std::to_string(value) + "<\\" + field_name + ">";
+    }
 
-    void Building::Serialize(XmlSerializer *xml) const {
-        xml->Header("building");
-        xml->IntegerField("id", id_);
-        xml->StringField("name", name_);
-        xml->Header("rooms");
-        for (auto &v : room_) {
-            v.Serialize(xml);
+    void XmlSerializer::StringField(const std::string &field_name, const std::string &value) {
+        *output_ << "<" + field_name + ">" + value + "<\\" + field_name + ">";
+    }
+
+    void XmlSerializer::BooleanField(const std::string &field_name, bool value) {
+        *output_ << "<" + field_name + ">" + std::to_string(value) + "<\\" + field_name + ">";
+    }
+
+    void XmlSerializer::SerializableField(const std::string &field_name, const Serializable &value) {
+        *output_ << "<" + field_name + ">";
+        value.Serialize(this);
+        *output_ << "<\\" + field_name + ">";
+    }
+
+    void XmlSerializer::ArrayField(const std::string &field_name,
+                                   const vector<reference_wrapper<const Serializable>> &value) {
+        Header(field_name);
+
+        for (const Serializable &n : value) {
+            n.Serialize(this);
         }
-        xml->Footer("rooms");
-        xml->Footer("building");
+
+        Footer(field_name);
     }
 
-    void Building::Serialize(JsonSerializer *json) const {
-        json->Header("building");
-        json->IntegerField("id", id_);
-        json->StringField("name", name_);
-        json->AddSth("\"rooms\": [");
-        int i = 0;
-        for (auto &v : room_) {
-            v.Serialize(json);
+    void XmlSerializer::Header(const std::string &object_name) {
+        *output_ << "<" + object_name + ">";
+    }
+
+    void XmlSerializer::Footer(const std::string &object_name) {
+        *output_ << "<\\" + object_name + ">";
+    }
+
+    Building::Building(int id, string name, std::vector<Room> elements) {
+        id_ = id;
+        name_ = name;
+        for (auto &n : elements) {
+            elements_.emplace_back(n);
+        }
+    }
+
+    void Building::Serialize(Serializer *serializer) const {
+        serializer->Header("building");
+        serializer->IntegerField("id", id_);
+        serializer->StringField("name", name_);
+        std::vector<std::reference_wrapper<const Serializable>> tmp;
+        for (const Room &n : elements_) {
+            tmp.emplace_back(n);
+        }
+        serializer->ArrayField("rooms", tmp);
+        serializer->Footer("building");
+
+    }
+
+    JsonSerializer::JsonSerializer(std::ostream *output) : Serializer(output) {
+
+    }
+
+    void JsonSerializer::NextField(void) {
+        string tmp = ", ";
+        *output_ << tmp;
+    }
+
+    void JsonSerializer::GetName(const std::string &field_name) {
+        *output_ << "\"" + field_name + "\": ";
+    }
+
+    void JsonSerializer::IntegerField(const std::string &field_name, int value) {
+        GetName(field_name);
+        *output_ << std::to_string(value);
+        NextField();
+    }
+
+    void JsonSerializer::DoubleField(const std::string &field_name, double value) {
+        GetName(field_name);
+        *output_ << std::to_string(value);
+        NextField();
+    }
+
+    void JsonSerializer::StringField(const std::string &field_name, const std::string &value) {
+        GetName(field_name);
+        *output_ << "\"" + value + "\"";
+        if (field_name != "type") {
+            NextField();
+        }
+
+    }
+
+    void JsonSerializer::BooleanField(const std::string &field_name, bool value) {
+        GetName(field_name);
+        *output_ << std::to_string(value);
+        NextField();
+    }
+
+    void JsonSerializer::SerializableField(const std::string &field_name, const Serializable &value) {
+        GetName(field_name);
+        value.Serialize(this);
+        NextField();
+
+    }
+
+    void JsonSerializer::ArrayField(const std::string &field_name,
+                                    const vector<reference_wrapper<const Serializable>> &value) {
+        GetName(field_name);
+        string open = "[", close = "]";
+        *output_ << open;
+        int i = 1;
+        for (const Serializable &n : value) {
+            n.Serialize(this);
+            if (i != value.size()) {
+                NextField();
+            }
             i++;
-            if (room_.size() > i) {
-                json->AddSth(", ");
+        }
+        *output_ << close;
+    }
+
+    void JsonSerializer::Header(const std::string &object_name) {
+        string open = "{";
+        *output_ << open;
+    }
+
+    void JsonSerializer::Footer(const std::string &object_name) {
+        string close = "}";
+        *output_ << close;
+    }
+
+    BuildingRepository::BuildingRepository(const std::initializer_list<Building> &elements) {
+        for (auto &n : elements) {
+            elements_.emplace_back(n);
+        }
+    }
+
+
+    BuildingRepository::BuildingRepository() {
+        elements_.clear();
+    }
+
+    void BuildingRepository::StoreAll(Serializer *serializer) const {
+        serializer->Header("building_repository");
+        std::vector<std::reference_wrapper<const Serializable>> tmp;
+        for (const Building &n : elements_) {
+            tmp.emplace_back(n);
+        }
+        serializer->ArrayField("buildings", tmp);
+        serializer->Footer("building_repository");
+    }
+
+    void BuildingRepository::Add(const Building &b) {
+        elements_.emplace_back(b);
+    }
+
+    int Building::Id(void) const {
+        return id_;
+    }
+
+    std::experimental::optional<Building> BuildingRepository::operator[](int id) const {
+        for (auto &n : elements_) {
+            if (n.Id() == id) {
+                return std::experimental::make_optional(n);
             }
         }
-        json->Footer("]");
-        json->Footer("}");
+
+        return experimental::optional<Building>();
     }
 }
