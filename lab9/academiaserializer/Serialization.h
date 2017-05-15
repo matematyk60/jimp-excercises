@@ -52,7 +52,7 @@ namespace academia{
             LECTURE_HALL,
             CLASSROOM,
         };
-        std::string TypeToString(Type type) const;
+        std::string TypeToString() const;
         Room(int id,const string &name, Type);
 
         void Serialize(Serializer *serializer) const override;
@@ -125,9 +125,9 @@ namespace academia{
     class BuildingRepository {
     public:
         BuildingRepository();
-        BuildingRepository(std::initializer_list<Building> elements);
+        BuildingRepository(const std::initializer_list<Building> &elements);
         void StoreAll(Serializer *serializer) const;
-        void Add(Building b);
+        void Add(const Building &b);
         std::experimental::optional<Building> operator[](int id) const;
     private:
         std::vector<Building> elements_;

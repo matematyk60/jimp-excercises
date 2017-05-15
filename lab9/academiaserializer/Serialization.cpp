@@ -17,8 +17,8 @@ namespace academia {
         type_ = type;
     }
 
-    std::string Room::TypeToString(Room::Type type) const {
-        switch (type) {
+    std::string Room::TypeToString() const {
+        switch (type_) {
             case Type::COMPUTER_LAB:
                 return "COMPUTER_LAB";
             case Type::CLASSROOM:
@@ -32,7 +32,7 @@ namespace academia {
         serializer->Header("room");
         serializer->IntegerField("id",id_);
         serializer->StringField("name",name_);
-        serializer->StringField("type",TypeToString(type_));
+        serializer->StringField("type",TypeToString());
         serializer->Footer("room");
     }
 
@@ -175,8 +175,8 @@ namespace academia {
         *output_ << close;
     }
 
-    BuildingRepository::BuildingRepository(std::initializer_list<Building> elements) {
-        for( auto n : elements){
+    BuildingRepository::BuildingRepository(const std::initializer_list<Building> &elements) {
+        for( auto &n : elements){
             elements_.emplace_back(n);
         }
     }
@@ -196,7 +196,7 @@ namespace academia {
         serializer->Footer("building_repository");
     }
 
-    void BuildingRepository::Add(Building b) {
+    void BuildingRepository::Add(const Building &b) {
         elements_.emplace_back(b);
     }
 
