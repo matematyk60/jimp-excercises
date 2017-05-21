@@ -7,27 +7,41 @@
 
 namespace algo{
     set<string> Keys(const map<string, int> &m) {
-        return set<string>();
+        set<string> answer;
+        transform(m.begin(), m.end(), inserter(answer, answer.end()), [](pair<string, int> tmp){
+            return tmp.first;
+        });
+        return answer;
     }
 
     vector<int> Values(const map<string, int> &m) {
-        return vector<int>();
+        vector<int>answer;
+        transform(m.begin(), m.end(), back_inserter(answer), [](pair<string, int> tmp){
+            return tmp.second;
+        });
+        return answer;
     }
 
     map<string, int> DivisableBy(const map<string, int> &m, int divisor) {
-        return map<string, int>();
+        map<string, int> answer;
+        copy_if(m.begin(), m.end(), inserter(m, m.end()), [divisor](pair<string, int> tmp){
+            return (tmp.second%divisor == 0);
+        });
+        return answer;
     }
 
     void SortInPlace(vector<int> *v) {
-
+        sort(v->begin(), v->end());
     }
 
     vector<int> Sort(const vector<int> &v) {
-        return vector<int>();
+        vector<int> answer(v.begin(), v.end());
+        sort(answer.begin(), answer.end());
+        return answer;
     }
 
     void SortByFirstInPlace(vector<pair<int, int>> *v) {
-
+        sort(v->begin(), v->end());
     }
 
     void SortBySecondInPlace(vector<pair<int, int>> *v) {
@@ -40,9 +54,11 @@ namespace algo{
 
     vector<string> MapToString(const vector<double> &v) {
         vector<string> vecMapString;
-        transform(v.begin(), v.end(), back_inserter(vecMapString), [](const double &v_iterator){
+
+        transform(v.begin(), v.end(), back_inserter(vecMapString), [](const double v_iterator){
             return std::to_string(v_iterator);
         });
+
         return vecMapString;
     }
 
@@ -51,11 +67,11 @@ namespace algo{
     }
 
     int Sum(const vector<int> &v) {
-        return 0;
+        return accumulate(v.begin(), v.end(), 0);
     }
 
     int Product(const vector<int> &v) {
-        return 0;
+        return inner_product(v.begin(), v.end(), v.begin(), 0);
     }
 
     bool Contains(const vector<int> &v, int element) {
@@ -65,11 +81,14 @@ namespace algo{
     }
 
     bool ContainsKey(const map<string, int> &v, const string &key) {
-        //return any_of(v.begin(), v.end(), )
+        auto search = v.find(key);
+        return (search != v.end());
     }
 
     bool ContainsValue(const map<string, int> &v, int value) {
-        return false;
+        return any_of(v.begin(), v.end(), [value](pair<string, int> tmp) {
+            return (tmp.second == value);
+        });
     }
 
     vector<string> RemoveDuplicates(const vector<string> &v) {
