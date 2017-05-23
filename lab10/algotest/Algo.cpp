@@ -6,6 +6,17 @@
 
 
 namespace algo{
+    int FindYear(std::map<int, set<int>> years, int course_id) {
+        auto found = find_if(years.begin(), years.end(), [course_id](std::pair<int,set<int>> n)->bool{
+            return (n.second.end() != find(n.second.begin(), n.second.end(), course_id));
+        });
+        if(found != years.end()){
+            return (*found).first;
+        } else {
+            return -1;
+        }
+    }
+
     set<string> Keys(const map<string, int> &m) {
         set<string> answer;
         transform(m.begin(), m.end(), inserter(answer, answer.end()), [](pair<string, int> tmp){
@@ -23,9 +34,9 @@ namespace algo{
     }
 
     map<string, int> DivisableBy(const map<string, int> &m, int divisor) {
-        map<string, int> answer;
-        copy_if(m.begin(), m.end(), inserter(m, m.end()), [divisor](pair<string, int> tmp){
-            return (tmp.second%divisor == 0);
+        map <string, int> answer;
+        copy_if(m.begin(), m.end(), inserter(answer,answer.end()), [divisor](pair<string,int> tmp){
+            return (tmp.second % divisor) == 0;
         });
         return answer;
     }
@@ -41,15 +52,27 @@ namespace algo{
     }
 
     void SortByFirstInPlace(vector<pair<int, int>> *v) {
-        sort(v->begin(), v->end());
+        sort(v->begin(), v->end(), [](std::pair<int,int> a, std::pair<int,int> b) {
+            return a.first < b.first;
+        });
     }
 
     void SortBySecondInPlace(vector<pair<int, int>> *v) {
-
+        struct {
+            bool operator()(std::pair<int,int> a, std::pair<int,int> b) const {
+                return a.second < b.second;
+            }
+        } customLess;
+        sort(v->begin(), v->end(), customLess);
     }
 
     void SortByThirdInPlace(vector<tuple<int, int, int>> *v) {
-
+        struct {
+                bool operator()(std::tuple<int,int,int> a, std::tuple<int,int,int> b) const{
+                    return std::get<2>(a) < std::get<2>(b);
+                }
+        } customLess;
+        sort(v->begin(), v->end(), customLess);
     }
 
     vector<string> MapToString(const vector<double> &v) {

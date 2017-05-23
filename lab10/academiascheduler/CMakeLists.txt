@@ -10,4 +10,4 @@ target_include_directories(libscheduler PUBLIC .)
 add_executable(scheduler ${SOURCE_FILES} main.cpp)
 
 target_link_libraries(scheduler libscheduler)
-
+target_link_libraries(libscheduler libalgo)
