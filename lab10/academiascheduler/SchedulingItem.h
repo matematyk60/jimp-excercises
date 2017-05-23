@@ -10,11 +10,11 @@ namespace academia{
     class SchedulingItem{
     public:
         SchedulingItem(int course_id = 0, int teacher_id = 0, int room_id = 0, int time_slot = 0, int year = 0);
-        int GetCourseId(void);
-        int GetTeacherId(void)const;
-        int GetRoomId(void)const;
-        int GetTimeSlot(void)const;
-        int GetYear(void)const;
+        int CourseId(void)const;
+        int TeacherId(void)const;
+        int RoomId(void)const;
+        int TimeSlot(void)const;
+        int Year(void)const;
     private:
         int course_id_;
         int teacher_id_;

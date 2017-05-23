@@ -13,23 +13,23 @@ namespace academia{
         year_ = year;
     }
 
-    int SchedulingItem::GetCourseId(void) {
+    int SchedulingItem::CourseId(void) const {
         return course_id_;
     }
 
-    int SchedulingItem::GetTeacherId(void) const {
+    int SchedulingItem::TeacherId(void) const {
         return teacher_id_;
     }
 
-    int SchedulingItem::GetRoomId(void) const {
+    int SchedulingItem::RoomId(void) const {
         return room_id_;
     }
 
-    int SchedulingItem::GetTimeSlot(void) const {
+    int SchedulingItem::TimeSlot(void) const {
         return time_slot_;
     }
 
-    int SchedulingItem::GetYear(void) const {
+    int SchedulingItem::Year(void) const {
         return year_;
     }
 }
