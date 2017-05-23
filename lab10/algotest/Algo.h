@@ -58,6 +58,8 @@ namespace algo {
 
     vector<int> InitializedVectorOfLength(int length, int initial_value);
 
+    int FindYear(std::map<int,set<int>> years, int course_id);
+
     void CopyInto(const vector<int> &v, int n_elements, vector<int> *out);
 
     int HowManyShortStrings(const vector<string> &v, int inclusive_short_length);

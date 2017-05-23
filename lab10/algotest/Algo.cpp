@@ -7,6 +7,17 @@
 using namespace std;
 
 namespace algo{
+    int FindYear(std::map<int, set<int>> years, int course_id) {
+        auto found = find_if(years.begin(), years.end(), [course_id](std::pair<int,set<int>> n)->bool{
+            return (n.second.end() != find(n.second.begin(), n.second.end(), course_id));
+        });
+        if(found != years.end()){
+            return (*found).first;
+        } else {
+            return -1;
+        }
+    }
+
     set<string> Keys(const map<string, int> &m) {
         set <string> answer;
         std::transform(m.begin(), m.end(), inserter(answer, answer.end()), [](pair<string,int> tmp){ return tmp.first;});
