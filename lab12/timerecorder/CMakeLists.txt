@@ -4,7 +4,7 @@ project(timerecorder)
 set(HEDEAR_FILES TimeRecorder.h)
 set(SOURCE_FILES TimeRecorder.cpp)
 
-add_library(libtimerecorder STATIC ${SOURCE_FILES})
+add_library(libtimerecorder STATIC ${SOURCE_FILES} ../academiateacherhash/TeacherHash.cpp ../academiateacherhash/TeacherHash.h)
 target_include_directories(libtimerecorder PUBLIC .)
 
 add_executable(timerecorder ${SOURCE_FILES} main.cpp)
