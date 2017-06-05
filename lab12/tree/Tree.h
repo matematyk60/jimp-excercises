@@ -12,21 +12,26 @@ namespace tree {
     template<class T>
     class Node {
     public:
-        Node(T value, Node<T> *parent = nullptr);
+        Node(T value, Node<T> *parent = nullptr) {
+            left_ = nullptr;
+            right_ = nullptr;
+            value_ = value;
+            parent_ = parent;
+        }
 
-        void SetRight(T value, Node<T> *parent);
+        void SetRight(T value, Node<T> *parent) { right_ = std::make_unique<Node<T>>(value, parent); }
 
-        void SetLeft(T value, Node<T> *parent);
+        void SetLeft(T value, Node<T> *parent) { left_ = std::make_unique<Node<T>>(value, parent); }
 
-        void SetParent(Node<T> *parent);
+        void SetParent(Node<T> *parent) { parent_ = parent; }
 
         Node<T> *GetLeft();
 
         Node<T> *GetRight();
 
-        size_t SubTreeSize();
+        T GetValue() { return value_; }
 
-        T GetValue();
+        size_t SubTreeSize();
 
         size_t MaxSubTree();
 
@@ -39,6 +44,7 @@ namespace tree {
         Node<T> *parent_;
     };
 
+
     template<class T>
     Node<T> *Node<T>::GetLeft() {
         if (left_ != nullptr) {
@@ -46,6 +52,28 @@ namespace tree {
         } else {
             return nullptr;
         }
+    }
+
+    template<class T>
+    Node<T> *Node<T>::GetRight() {
+        if (right_ != nullptr) {
+            return right_.get();
+        } else {
+            return nullptr;
+        }
+    }
+
+    template<class T>
+    size_t Node<T>::SubTreeSize() {
+        size_t size = 0;
+        if (this->GetLeft() != nullptr) {
+            size += this->GetLeft()->SubTreeSize();
+        }
+        size += 1;
+        if (this->GetRight() != nullptr) {
+            size += this->GetRight()->SubTreeSize();
+        }
+        return size;
     }
 
     template<class T>
@@ -67,7 +95,7 @@ namespace tree {
 
     template<class T>
     bool Node<T>::Find(T value) {
-        bool found = false;
+        bool found;
         if (value_ == value) {
             return true;
         }
@@ -85,81 +113,28 @@ namespace tree {
         return found;
     }
 
-    template<class T>
-    size_t Node<T>::SubTreeSize() {
-        size_t size = 0;
-        if (this->GetLeft() != nullptr) {
-            size += this->GetLeft()->SubTreeSize();
-        }
-        size += 1;
-        if (this->GetRight() != nullptr) {
-            size += this->GetRight()->SubTreeSize();
-        }
-        return size;
-    }
-
-    template<class T>
-    Node<T> *Node<T>::GetRight() {
-        if (right_ != nullptr) {
-            return right_.get();
-        } else {
-            return nullptr;
-        }
-    }
-
-    template<class T>
-    void Node<T>::SetParent(Node<T> *parent) {
-        parent_ = parent;
-    }
-
-    template<class T>
-    T Node<T>::GetValue() {
-        return value_;
-    }
-
-    template<class T>
-    void Node<T>::SetRight(T value, Node<T> *parent) {
-        right_ = std::make_unique<Node<T>>(value, parent);
-    }
-
-    template<class T>
-    void Node<T>::SetLeft(T value, Node<T> *parent) {
-        left_ = std::make_unique<Node<T>>(value, parent);
-    }
-
-    template<class T>
-    Node<T>::Node(T value, Node<T> *parent) {
-        left_ = nullptr;
-        right_ = nullptr;
-        value_ = value;
-        parent_ = parent;
-    }
 
     template<class T>
     class Tree {
     public:
-        Tree(T value = T{});
+        Tree(T value = T{}) { root_ = std::make_unique<Node<T>>(value); }
 
         void Insert(T value);
 
-        T Value() const;
+        T Value() const { return (*root_).GetValue(); }
 
         void Inserting(T value, Node<T> *node);
 
-        size_t Size() const;
+        size_t Size() const { return root_->SubTreeSize(); }
 
-        size_t Depth() const;
+        size_t Depth() const { return root_->MaxSubTree(); }
 
-        bool Find(T value) const;
+        bool Find(T value) const { return root_->Find(value); }
 
     private:
         std::unique_ptr<Node<T>> root_;
     };
 
-    template<class T>
-    Tree<T>::Tree(T value) {
-        root_ = std::make_unique<Node<T>>(value);
-    }
 
     template<class T>
     void Tree<T>::Insert(T value) {
@@ -183,26 +158,6 @@ namespace tree {
                 Inserting(value, node->GetRight());
             }
         }
-    }
-
-    template<class T>
-    bool Tree<T>::Find(T value) const {
-        return root_->Find(value);
-    }
-
-    template<class T>
-    T Tree<T>::Value() const {
-        return (*root_).GetValue();
-    }
-
-    template<class T>
-    size_t Tree<T>::Size() const {
-        return root_->SubTreeSize();
-    }
-
-    template<class T>
-    size_t Tree<T>::Depth() const {
-        return root_->MaxSubTree();
     }
 }
 
