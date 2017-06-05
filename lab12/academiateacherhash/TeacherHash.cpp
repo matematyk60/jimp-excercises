@@ -23,7 +23,7 @@ namespace academia {
 
     size_t TeacherHash::operator()(const Teacher &teacher) const {
         size_t hashed = std::hash<int>()(teacher.Id()) +
-                        std::hash<std::string>()(teacher.Name()) +
+                        std::hash<string>()(teacher.Name()) +
                         std::hash<string>()(teacher.Department());
         return hashed;
     }
