@@ -1,5 +1,5 @@
 //
-// Created by matematyk60 on 30.05.17.
+// Created by janek on 30.05.17.
 //
 
 #ifndef JIMP_EXERCISES_TREE_H
