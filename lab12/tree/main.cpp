@@ -2,24 +2,17 @@
 // Created by janek on 30.05.17.
 //
 
-#include "Tree.h"
-#include <vector>
 #include <iostream>
-
-using namespace std;
-using namespace tree;
+#include "Tree.h"
 
 int main(){
-//    działą:
-    Tree<int> first;
-//    co to jest:
-//    Tree<int> firsta(); // dlaczego nie mogę na first operować?
+    int p = 23;
+    tree::Tree<int> P {5};
 
-//    to działą:
-//    Node<int> nodzik(5);
-//    Node<int>(8);
-//    std::make_unique<Node<int>>(9);
+    P.Insert(1);
+    P.Insert(1);
+    P.Insert(5);
+    P.Insert(23);
 
-
-    return 0;
+    std::cout << P.Find(0);
 }
