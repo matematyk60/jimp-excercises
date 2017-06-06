@@ -9,5 +9,5 @@ target_include_directories(libtreeiterators PUBLIC .)
 
 add_executable(treeiterators ${SOURCE_FILES} main.cpp)
 
+target_link_libraries(libtreeiterators libtree)
 target_link_libraries(treeiterators libtreeiterators)
-

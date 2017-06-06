@@ -17,7 +17,7 @@ namespace profiling {
 
         static cl::time_point start = cl::now();
 
-        auto result = (object)();
+        auto result = object();
 
         std::chrono::duration<double, std::milli> elapsed = cl::now() - start;
 
