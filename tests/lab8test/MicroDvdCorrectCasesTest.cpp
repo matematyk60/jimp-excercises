@@ -38,14 +38,10 @@ TEST_F(MicroDvdCorrectCasesTest, MicroDvdSubtitlesMovedBy1400ms) {
 
 TEST_F(MicroDvdCorrectCasesTest, OverlappingSubtitlesAreCorrect) {
   auto subs = make_unique<MicroDvdSubtitles>();
-  stringstream in {"{0}{250}TEXT\n{260}{300}NEWLINE\n{280}{350} Longer text of moviesubtitles"};
+  stringstream in {"{0}{250}TEXT\n{260}{300}NEWLINE\n{280}{350} Longer text of subtitles"};
   stringstream out;
   subs->ShiftAllSubtitlesBy(300, 25, &in, &out);
-<<<<<<< HEAD
-  EXPECT_EQ("{7}{257}TEXT\n{267}{307}NEWLINE\n{287}{357} Longer text of moviesubtitles\n"s,out.str());
-=======
   EXPECT_PRED2(MatchesUpToExtraNewLine,"{7}{257}TEXT\n{267}{307}NEWLINE\n{287}{357} Longer text of subtitles"s,out.str());
->>>>>>> 41f08f688cb1c5f62eb00b2da27b6450b654c19d
 }
 
 TEST_F(MicroDvdCorrectCasesTest, TextWithFormattingIsCorrect) {

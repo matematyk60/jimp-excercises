@@ -287,7 +287,7 @@ TEST_F(ScheduleTest, SchedulerCreatesFullSchedule) {
                                  make_pair(600, vector<int> {70, 80, 91, 92, 93})};
   map<int, set<int>> years{make_pair(1, set<int>{10, 20, 11, 21}),
                            make_pair(2, set<int>{30, 40, 32, 42}),
-                           make_pair(3, set<int>{50, 60, 53, 54}),
+                            make_pair(3, set<int>{50, 60, 53, 54}),
                            make_pair(4, set<int>{70, 80, 77, 79}),
                            make_pair(5, set<int>{90, 91, 92, 93})};
 
